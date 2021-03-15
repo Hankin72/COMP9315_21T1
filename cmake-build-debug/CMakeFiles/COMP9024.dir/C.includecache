@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/guohaojin/Documents/COMP9024/Codes/data_type.c
+
+/Users/guohaojin/Documents/COMP9024/Codes/main.c
+stdio.h
+-
+
