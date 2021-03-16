@@ -1,0 +1,143 @@
+CREATE FUNCTION intset_in(cstring)
+   RETURNS intSet
+   AS '_OBJWD_/intset'
+   LANGUAGE C IMMUTABLE STRICT;
+
+
+CREATE FUNCTION intset_out(intSet)
+   RETURNS cstring
+   AS '_OBJWD_/intset'
+   LANGUAGE C IMMUTABLE STRICT;
+
+CREATE TYPE intSet (
+   internallength = variable,
+   input = intset_in,
+   output = intset_out
+);
+
+
+
+
+CREATE FUNCTION intset_contains_one(integer, intSet) RETURNS bool
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR ? (
+   leftarg = integer,
+   rightarg = intSet,
+   procedure = intset_contains_one
+);
+
+
+
+CREATE FUNCTION intset_cardinality(intSet) RETURNS integer
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR # (
+   rightarg = intSet,
+   procedure = intset_cardinality
+);
+
+
+
+CREATE FUNCTION intset_left_contains_right(intSet, intSet) RETURNS bool
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR >@ (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_left_contains_right
+);
+
+
+
+CREATE FUNCTION intset_left_is_contained_by_right(intSet, intSet) RETURNS bool
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR @< (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_left_is_contained_by_right
+);
+
+
+
+CREATE FUNCTION intset_equal(intSet, intSet) RETURNS bool
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR = (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_equal,
+   commutator = = ,
+   -- leave out negator since we didn't create <> operator
+   negator = <> ,
+   restrict = eqsel,
+   join = eqjoinsel
+);
+
+
+
+CREATE FUNCTION intset_not_equal(intSet, intSet) RETURNS bool
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR <> (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_not_equal,
+   commutator = <> ,
+   -- leave out negator since we didn't create <> operator
+   negator = = ,
+   restrict = neqsel,
+   join = neqjoinsel
+);
+
+
+
+CREATE FUNCTION intset_intersection(intSet, intSet) RETURNS intSet
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR && (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_intersection
+);
+
+
+
+CREATE FUNCTION intset_union(intSet, intSet) RETURNS intSet
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR || (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_union
+);
+
+
+
+CREATE FUNCTION intset_disjunction(intSet, intSet) RETURNS intSet
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR !! (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_disjunction
+);
+
+
+
+CREATE FUNCTION intset_difference(intSet, intSet) RETURNS intSet
+   AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR - (
+   leftarg = intSet,
+   rightarg = intSet,
+   procedure = intset_difference
+);
+
+
+
+
+
+
+
