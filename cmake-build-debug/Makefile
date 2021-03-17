@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/guohaojin/Documents/COMP9024
+CMAKE_SOURCE_DIR = /Users/guohaojin/Documents/COMP9315_21T1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/guohaojin/Documents/COMP9024/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles /Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,59 +123,32 @@ COMP9024/fast:
 	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/build
 .PHONY : COMP9024/fast
 
-Codes/data_type.o: Codes/data_type.c.o
+Codes/practice.o: Codes/practice.c.o
 
-.PHONY : Codes/data_type.o
-
-# target to build an object file
-Codes/data_type.c.o:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/data_type.c.o
-.PHONY : Codes/data_type.c.o
-
-Codes/data_type.i: Codes/data_type.c.i
-
-.PHONY : Codes/data_type.i
-
-# target to preprocess a source file
-Codes/data_type.c.i:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/data_type.c.i
-.PHONY : Codes/data_type.c.i
-
-Codes/data_type.s: Codes/data_type.c.s
-
-.PHONY : Codes/data_type.s
-
-# target to generate assembly for a file
-Codes/data_type.c.s:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/data_type.c.s
-.PHONY : Codes/data_type.c.s
-
-Codes/main.o: Codes/main.c.o
-
-.PHONY : Codes/main.o
+.PHONY : Codes/practice.o
 
 # target to build an object file
-Codes/main.c.o:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/main.c.o
-.PHONY : Codes/main.c.o
+Codes/practice.c.o:
+	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/practice.c.o
+.PHONY : Codes/practice.c.o
 
-Codes/main.i: Codes/main.c.i
+Codes/practice.i: Codes/practice.c.i
 
-.PHONY : Codes/main.i
+.PHONY : Codes/practice.i
 
 # target to preprocess a source file
-Codes/main.c.i:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/main.c.i
-.PHONY : Codes/main.c.i
+Codes/practice.c.i:
+	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/practice.c.i
+.PHONY : Codes/practice.c.i
 
-Codes/main.s: Codes/main.c.s
+Codes/practice.s: Codes/practice.c.s
 
-.PHONY : Codes/main.s
+.PHONY : Codes/practice.s
 
 # target to generate assembly for a file
-Codes/main.c.s:
-	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/main.c.s
-.PHONY : Codes/main.c.s
+Codes/practice.c.s:
+	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/practice.c.s
+.PHONY : Codes/practice.c.s
 
 # Help Target
 help:
@@ -186,12 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... COMP9024"
-	@echo "... Codes/data_type.o"
-	@echo "... Codes/data_type.i"
-	@echo "... Codes/data_type.s"
-	@echo "... Codes/main.o"
-	@echo "... Codes/main.i"
-	@echo "... Codes/main.s"
+	@echo "... Codes/practice.o"
+	@echo "... Codes/practice.i"
+	@echo "... Codes/practice.s"
 .PHONY : help
 
 

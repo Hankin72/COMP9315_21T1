@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/guohaojin/Documents/COMP9024
+CMAKE_SOURCE_DIR = /Users/guohaojin/Documents/COMP9315_21T1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/guohaojin/Documents/COMP9024/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/COMP9024.dir/depend.make
@@ -57,45 +57,30 @@ include CMakeFiles/COMP9024.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/COMP9024.dir/flags.make
 
-CMakeFiles/COMP9024.dir/Codes/main.c.o: CMakeFiles/COMP9024.dir/flags.make
-CMakeFiles/COMP9024.dir/Codes/main.c.o: ../Codes/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/COMP9024.dir/Codes/main.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/COMP9024.dir/Codes/main.c.o   -c /Users/guohaojin/Documents/COMP9024/Codes/main.c
+CMakeFiles/COMP9024.dir/Codes/practice.c.o: CMakeFiles/COMP9024.dir/flags.make
+CMakeFiles/COMP9024.dir/Codes/practice.c.o: ../Codes/practice.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/COMP9024.dir/Codes/practice.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/COMP9024.dir/Codes/practice.c.o   -c /Users/guohaojin/Documents/COMP9315_21T1/Codes/practice.c
 
-CMakeFiles/COMP9024.dir/Codes/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/COMP9024.dir/Codes/main.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/guohaojin/Documents/COMP9024/Codes/main.c > CMakeFiles/COMP9024.dir/Codes/main.c.i
+CMakeFiles/COMP9024.dir/Codes/practice.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/COMP9024.dir/Codes/practice.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/guohaojin/Documents/COMP9315_21T1/Codes/practice.c > CMakeFiles/COMP9024.dir/Codes/practice.c.i
 
-CMakeFiles/COMP9024.dir/Codes/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/COMP9024.dir/Codes/main.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/guohaojin/Documents/COMP9024/Codes/main.c -o CMakeFiles/COMP9024.dir/Codes/main.c.s
-
-CMakeFiles/COMP9024.dir/Codes/data_type.c.o: CMakeFiles/COMP9024.dir/flags.make
-CMakeFiles/COMP9024.dir/Codes/data_type.c.o: ../Codes/data_type.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/COMP9024.dir/Codes/data_type.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/COMP9024.dir/Codes/data_type.c.o   -c /Users/guohaojin/Documents/COMP9024/Codes/data_type.c
-
-CMakeFiles/COMP9024.dir/Codes/data_type.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/COMP9024.dir/Codes/data_type.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/guohaojin/Documents/COMP9024/Codes/data_type.c > CMakeFiles/COMP9024.dir/Codes/data_type.c.i
-
-CMakeFiles/COMP9024.dir/Codes/data_type.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/COMP9024.dir/Codes/data_type.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/guohaojin/Documents/COMP9024/Codes/data_type.c -o CMakeFiles/COMP9024.dir/Codes/data_type.c.s
+CMakeFiles/COMP9024.dir/Codes/practice.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/COMP9024.dir/Codes/practice.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/guohaojin/Documents/COMP9315_21T1/Codes/practice.c -o CMakeFiles/COMP9024.dir/Codes/practice.c.s
 
 # Object files for target COMP9024
 COMP9024_OBJECTS = \
-"CMakeFiles/COMP9024.dir/Codes/main.c.o" \
-"CMakeFiles/COMP9024.dir/Codes/data_type.c.o"
+"CMakeFiles/COMP9024.dir/Codes/practice.c.o"
 
 # External object files for target COMP9024
 COMP9024_EXTERNAL_OBJECTS =
 
-COMP9024: CMakeFiles/COMP9024.dir/Codes/main.c.o
-COMP9024: CMakeFiles/COMP9024.dir/Codes/data_type.c.o
+COMP9024: CMakeFiles/COMP9024.dir/Codes/practice.c.o
 COMP9024: CMakeFiles/COMP9024.dir/build.make
 COMP9024: CMakeFiles/COMP9024.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable COMP9024"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable COMP9024"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/COMP9024.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +93,6 @@ CMakeFiles/COMP9024.dir/clean:
 .PHONY : CMakeFiles/COMP9024.dir/clean
 
 CMakeFiles/COMP9024.dir/depend:
-	cd /Users/guohaojin/Documents/COMP9024/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/guohaojin/Documents/COMP9024 /Users/guohaojin/Documents/COMP9024 /Users/guohaojin/Documents/COMP9024/cmake-build-debug /Users/guohaojin/Documents/COMP9024/cmake-build-debug /Users/guohaojin/Documents/COMP9024/cmake-build-debug/CMakeFiles/COMP9024.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/guohaojin/Documents/COMP9315_21T1 /Users/guohaojin/Documents/COMP9315_21T1 /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/COMP9024.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/COMP9024.dir/depend
 

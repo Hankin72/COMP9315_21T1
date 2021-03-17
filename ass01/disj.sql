@@ -1,23 +1,3 @@
-
---
--- create table mySets (id integer primary key, iset intSet);
---
--- insert into mySets(id, iset) values (1, '{1,2,3}');
---
--- insert into mySets(id, iset) values (2, '{1,3,1,3,1}');
---
--- insert into mySets(id, iset) values (3, '{3,4,5,2,3,1,1,,1,1,}');
---
--- insert into mySets(id, iset) values (4, '{4,5,2,1,1}');
---
--- select * from mySets order by id;
---
--- select id, iset, (#iset) as card from mySets order by id;
-
-
-
--- select id, iset, (#iset) as cardinality from mySets order by id;
---
 drop table if exists mySets;
 create table mySets (id integer primary key, iset intSet);
 insert into mySets values (1, '{1,2,3}');

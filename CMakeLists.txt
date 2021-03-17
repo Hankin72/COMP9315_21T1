@@ -3,9 +3,12 @@ project(COMP9024 C)
 
 set(CMAKE_C_STANDARD 99)
 
+#include_directories(SYSTEM"/fool/bar")
+
 add_executable(COMP9024
 
 
-        Codes/main.c
-
-        Codes/data_type.c)
+#
+        Codes/practice.c
+#        ass01/intset.c
+        )

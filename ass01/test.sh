@@ -1,20 +1,35 @@
 
-#source ~/Documents/COMP9315_21T1/postgresql-12.5
-#
-#pg_ctl start -; $PGDATA/log
 
-#source /srvr/z5216214/env
-#source /srvr/z5216214/postgresql-12.5/src/tutorial/
-#cp -rf /srvr/z5216214/postgresql-12.5/src/tutorial/
+##source /srvr/z5216214/env
+##source /srvr/z5216214/postgresql-12.5/src/tutorial/
+#
+
+
+
+
+
+
 # 复制本地文件到postgresql的目录下
 
-cp -rf intset.c ~/Documents/COMP9315_21T1/postgresql-12.5/src/tutorial/
-cp -rf intset.source ~/Documents/COMP9315_21T1/postgresql-12.5/src/tutorial/
-cp -rf Makefile ~/Documents/COMP9315_21T1/postgresql-12.5/src/tutorial/
-cp -rf test.sql ~/Documents/COMP9315_21T1/postgresql-12.5/src/tutorial/
+#cp -rf intset.c /srvr/z5216214/postgresql-12.5/src/tutorial/
+#cp -rf intset.source /srvr/z5216214/postgresql-12.5/src/tutorial/
+#cp -rf Makefile /srvr/z5216214/postgresql-12.5/src/tutorial/
+#cp -rf test.sql /srvr/z5216214/postgresql-12.5/src/tutorial/
 
+
+cp -rf intset.c ~/postgresql-12.5/src/tutorial/
+cp -rf intset.source ~/postgresql-12.5/src/tutorial/
+
+cp -rf Makefile ~/postgresql-12.5/src/tutorial/
+cp -rf test.sql ~/postgresql-12.5/src/tutorial/
+
+
+source /Users/guohaojin/postgresql/env
+pg1
+psql -l
+#pg_ctl start -l $PGHOME/log
 # 修改程序执行的目录
-cd ~/Documents/COMP9315_21T1/postgresql-12.5/src/tutorial/
+cd ~/postgresql-12.5/src/tutorial/
 
 
 # 执行make
@@ -27,6 +42,8 @@ createdb test
 psql test -f intset.sql
 psql test -f test.sql
 
+pg_ctl stop;
+pg0
 # 如果没有权限
 # chmod a+x test.sh
-
+# 执行./test.sh

@@ -24,6 +24,18 @@ int main(){
      * 我的第一个c程序
      */
     printf("Hello, world! \n");
+
+
+    int n[]={3,2,1,4,7,6,5,8,0,9};
+
+    int largest,i,num;
+
+    num= sizeof(n)/sizeof(n[0]);
+
+    printf("%d",n);
+
+
+
     return 0;
 }
 

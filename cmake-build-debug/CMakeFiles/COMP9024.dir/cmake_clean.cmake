@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/COMP9024.dir/Codes/data_type.c.o"
-  "CMakeFiles/COMP9024.dir/Codes/main.c.o"
+  "CMakeFiles/COMP9024.dir/Codes/practice.c.o"
   "COMP9024"
   "COMP9024.pdb"
 )

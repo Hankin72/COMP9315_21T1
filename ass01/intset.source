@@ -16,51 +16,56 @@ CREATE TYPE intSet (
 );
 
 
-
-
-CREATE FUNCTION intset_contains_one(integer, intSet) RETURNS bool
+------------------------contains i ? S--------------------1
+CREATE FUNCTION intset_contains(integer, intSet) RETURNS bool
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
 CREATE OPERATOR ? (
    leftarg = integer,
    rightarg = intSet,
-   procedure = intset_contains_one
+   procedure = intset_contains
 );
+---------------------------------------------------
 
 
 
-CREATE FUNCTION intset_cardinality(intSet) RETURNS integer
+--------------------cardinality------------------------2
+CREATE FUNCTION intset_num_elements(intSet) RETURNS integer
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
 CREATE OPERATOR # (
    rightarg = intSet,
-   procedure = intset_cardinality
+   procedure = intset_num_elements
 );
+---------------------------------------------
 
 
 
-CREATE FUNCTION intset_left_contains_right(intSet, intSet) RETURNS bool
+-------------------Superset: left_contains_right------------------3-------
+CREATE FUNCTION intset_supset(intSet, intSet) RETURNS bool
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
 CREATE OPERATOR >@ (
    leftarg = intSet,
    rightarg = intSet,
-   procedure = intset_left_contains_right
+   procedure = intset_supset
 );
+--------------------------------------------------------4
 
 
-
-CREATE FUNCTION intset_left_is_contained_by_right(intSet, intSet) RETURNS bool
+---------------subset: left is contained by right ------------
+CREATE FUNCTION intset_subset(intSet, intSet) RETURNS bool
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
 CREATE OPERATOR @< (
    leftarg = intSet,
    rightarg = intSet,
-   procedure = intset_left_is_contained_by_right
+   procedure = intset_subset
 );
+-----------------------------------------------------------
 
 
-
+------------equal----------------------------5
 CREATE FUNCTION intset_equal(intSet, intSet) RETURNS bool
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
@@ -74,9 +79,10 @@ CREATE OPERATOR = (
    restrict = eqsel,
    join = eqjoinsel
 );
+-------------------------------------------
 
 
-
+----------------not-equal---------------------------------6
 CREATE FUNCTION intset_not_equal(intSet, intSet) RETURNS bool
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
@@ -84,15 +90,15 @@ CREATE OPERATOR <> (
    leftarg = intSet,
    rightarg = intSet,
    procedure = intset_not_equal,
-   commutator = <> ,
+   commutator = <>,
    -- leave out negator since we didn't create <> operator
-   negator = = ,
+   negator = =,
    restrict = neqsel,
    join = neqjoinsel
 );
+------------------------------------------------------
 
-
-
+-----------------set intersection  A  && B---------------------7
 CREATE FUNCTION intset_intersection(intSet, intSet) RETURNS intSet
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
@@ -101,9 +107,10 @@ CREATE OPERATOR && (
    rightarg = intSet,
    procedure = intset_intersection
 );
+---------------------------------------------
 
 
-
+-----------------set union A || B  ------------------------8
 CREATE FUNCTION intset_union(intSet, intSet) RETURNS intSet
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
@@ -112,9 +119,10 @@ CREATE OPERATOR || (
    rightarg = intSet,
    procedure = intset_union
 );
+----------------------------------------------------------9-
 
 
-
+-----------------set_disjunction---------------------------------
 CREATE FUNCTION intset_disjunction(intSet, intSet) RETURNS intSet
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
@@ -123,19 +131,20 @@ CREATE OPERATOR !! (
    rightarg = intSet,
    procedure = intset_disjunction
 );
+--------------------------------------------------------
 
 
+----------difference: the set difference, A- B --------------10
 
-CREATE FUNCTION intset_difference(intSet, intSet) RETURNS intSet
+CREATE FUNCTION intset_diff(intSet, intSet) RETURNS intSet
    AS '_OBJWD_/intset' LANGUAGE C IMMUTABLE STRICT;
 
 CREATE OPERATOR - (
    leftarg = intSet,
    rightarg = intSet,
-   procedure = intset_difference
+   procedure = intset_diff
 );
-
-
+---------------------------------------------------
 
 
 

@@ -6,9 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/guohaojin/Documents/COMP9024/Codes/data_type.c
-
-/Users/guohaojin/Documents/COMP9024/Codes/main.c
+/Users/guohaojin/Documents/COMP9315_21T1/Codes/practice.c
 stdio.h
+-
+string.h
+-
+stdlib.h
+-
+stdbool.h
 -
 
