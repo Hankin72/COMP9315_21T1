@@ -1,3 +1,4 @@
+
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -24,11 +25,9 @@ typedef struct intSet {
     int intset[1];
 } intSet;
 
-//determine whether the inset is valid
-
 
 // Sort the inset, by selection sort
-static int SelectionSort(int *array, int size) {
+static int Sorting_element(int *array, int size) {
     int i, j, k, temp;
     for (i = 0; i < size - 1; i++) {
         k = i;
@@ -42,6 +41,78 @@ static int SelectionSort(int *array, int size) {
         array[i] = temp;
     }
     return (*array);
+}
+
+//determine whether the inset is valid by regex expression
+// function used to compile the regrex and execute it
+static int regex_check_str(char *str, char *regexPattern) {
+    regex_t reg_check;
+    int output = false;
+    int cflags;
+
+    cflags = REG_EXTENDED;
+    // compile the regex
+    if (regcomp(&reg_check, regexPattern, cflags)) {
+        return false;
+    }
+    // execute the regex
+    if (regexec(&reg_check, str, 0, NULL, 0)) {
+        output = false;
+    } else {
+        output = true;
+    }
+    // free the regex
+    regfree(&reg_check);
+    return output;
+}
+
+static int valid_str(char *str) {
+    int match_result;
+    char *re = "\\s*\\{(\\s*([0-9]+\\d*)\\s*,)*(\\s*([0-9]+\\d*))\\s*\\}\\s*|\\s*\\{\\s*\\}\\s*";
+    int result = false;
+    match_result = regex_check_str(str, re);
+    if (match_result == false) {
+        return false;
+    } else {
+        result = true;
+    }
+    return result;
+}
+
+
+static int intset_2_cstring(char *result, intSet *intset_elements, int allocate_len){
+    int index;
+    char left[10]="{";
+    char right[10] ="}";
+    char comma[10] =",";
+    char temp_str[32];
+
+    index = intset_elements->intset[0];
+
+    if (index==0){
+        sprintf(result, "%s%s", left,right);
+    }
+    if (index > 0) {
+        sprintf(result, "%s", left);
+        sprintf(temp_str, "%d", intset_elements->intset[1]);
+        strcat(result, temp_str);
+        for (int i = 1; i < index; i++) {
+            strcat(result, comma);
+            sprintf(temp_str, "%d", intset_elements->intset[i + 1]);
+            if (strlen(result) > allocate_len - 34) {
+                allocate_len = allocate_len + allocate_len;
+                result = (char *) realloc(result, sizeof(char) * allocate_len);
+            }
+            strcat(result, temp_str);
+        }
+        if (strlen(result) > allocate_len - 34) {
+            allocate_len = allocate_len + allocate_len;
+            result = (char *) realloc(result, sizeof(char) * allocate_len);
+        }
+        strcat(result, right);
+    }
+    return *result;
+
 }
 
 /*****************************************************************************
@@ -66,10 +137,14 @@ intset_in(PG_FUNCTION_ARGS) {
     int *arrayflag;
     const char delims[4] = "{, }";
     char *temp_result = NULL;
+    if (!valid_str(str)) {
+        ereport(ERROR,
+        (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+         errmsg("invalid input syntax for type %s: \"%s\"",
+                 "intSet", str)));
+    }
 
-    // Assign an address to the array
     array_intset = (int *) malloc(sizeof(int) * allocate_len);
-
     // cut the current string
     temp_result = strtok(str, delims);
     while (temp_result != NULL) {
@@ -83,7 +158,6 @@ intset_in(PG_FUNCTION_ARGS) {
         temp_result = strtok(NULL, delims);
         index++;
     }
-
     // Find the maximum value in the current array_set
     max = array_intset[0];
     for (m = 1; m < index; m++) {
@@ -91,7 +165,6 @@ intset_in(PG_FUNCTION_ARGS) {
             max = array_intset[m];
         }
     }
-
     arrayflag = (int *) malloc(sizeof(int) * (max + 1));
     // delete the duplicated elements(number)
     for (i = 0; i <= max; i++) {
@@ -108,7 +181,7 @@ intset_in(PG_FUNCTION_ARGS) {
         }
     }
     // sorting the array_intset
-    SelectionSort(array_intset, index_element_num);
+    Sorting_element(array_intset, index_element_num);
     result = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
     SET_VARSIZE(result, VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
     //assign the value of array_intset to the result
@@ -134,43 +207,18 @@ PG_FUNCTION_INFO_V1(intset_out);
 Datum
 intset_out(PG_FUNCTION_ARGS) {
     intSet *intset_elements = (intSet *) PG_GETARG_POINTER(0);
-    char *result_temp;
     char *result;
-    int index_count;
+    char *output;
     int allocate_len = 100;
-    char string_limit[32];
+    result =(char*) malloc(sizeof(char)*allocate_len);
+    intset_2_cstring(result, intset_elements , allocate_len);
+    output = psprintf("%s", result);
+    free(result);
+    PG_RETURN_CSTRING(output);
 
-    result_temp = (char *) malloc(sizeof(char) * allocate_len);
-    index_count = intset_elements->intset[0];
-
-    strcpy(result_temp, "{");
-    if (index_count > 0) {
-        // stitching the first number
-        // pg_ltoa: number to string
-        pg_ltoa(intset_elements->intset[1], string_limit);
-        strcat(result_temp, string_limit);
-        for (int i = 1; i < index_count; i++) {
-            strcat(result_temp, ",");
-
-            pg_ltoa(intset_elements->intset[i + 1], string_limit);
-            if (strlen(result_temp) + strlen(string_limit) + 2 >= allocate_len) {
-
-                allocate_len = allocate_len + allocate_len;
-                result_temp = (char *) realloc(result_temp, sizeof(char) * allocate_len);
-            }
-            strcat(result_temp, string_limit);
-        }
-    }
-    if (strlen(result_temp) + strlen(string_limit) + 2 >= allocate_len) {
-        allocate_len = allocate_len + allocate_len;
-        result_temp = (char *) realloc(result_temp, sizeof(char) * allocate_len);
-    }
-    strcat(result_temp, "}");
-    result = psprintf("%s", result_temp);
-
-    free(result_temp);
-    PG_RETURN_CSTRING(result);
 }
+
+
 
 /*****************************************************************************
  * Contain: the intSet type: contains, a belongs to S
@@ -238,6 +286,9 @@ intset_supset(PG_FUNCTION_ARGS) {
     if (index != count_right) {
         output = 0;
     } else {
+        if (index==0 && count_right ==0){
+            output=1;
+        }
         // len(A) >= len(B) ---check
         for (int i = 0; i < index; i++) {
 
@@ -292,6 +343,9 @@ intset_subset(PG_FUNCTION_ARGS) {
     if (index != count_left) {
         output = 0;
     } else {
+        if (index==0 && count_left ==0 ){
+            output =1;
+        }
         // len(A) >= len(B) ---check
         for (int i = 0; i < index; i++) {
 
@@ -426,7 +480,7 @@ intset_intersection(PG_FUNCTION_ARGS) {
         }
     }
     // sorting if necessary
-    SelectionSort(diff_inset_temp, index);
+    Sorting_element(diff_inset_temp, index);
     // allocate address for tem_result_diff
     output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index + 1)));
     SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index + 1)));
@@ -499,7 +553,7 @@ intset_union(PG_FUNCTION_ARGS) {
             temp_output[index_element_num++] = arrayflag[i];
         }
     }
-    SelectionSort(temp_output, index_element_num);
+    Sorting_element(temp_output, index_element_num);
     output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
     SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
 
@@ -587,7 +641,7 @@ intset_disjunction(PG_FUNCTION_ARGS) {
         temp_total[index_total] = temp2[n];
         index_total++;
     }
-    SelectionSort(temp_total, index_total);
+    Sorting_element(temp_total, index_total);
 
     output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index_total + 1)));
     SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index_total + 1)));
@@ -640,7 +694,7 @@ intset_diff(PG_FUNCTION_ARGS) {
             index++;
         }
     }
-    SelectionSort(temp, index);
+    Sorting_element(temp, index);
     output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index + 1)));
     SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index + 1)));
     output->intset[0] = index;

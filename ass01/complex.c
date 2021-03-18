@@ -35,13 +35,18 @@ complex_in(PG_FUNCTION_ARGS)
 				y;
 	Complex    *result;
 
+
+
 	if (sscanf(str, " ( %lf , %lf )", &x, &y) != 2)
 		ereport(ERROR,
 				(errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
 				 errmsg("invalid input syntax for type %s: \"%s\"",
 						"complex", str)));
 
+
+
 	result = (Complex *) palloc(sizeof(Complex));
+
 	result->x = x;
 	result->y = y;
 	PG_RETURN_POINTER(result);
