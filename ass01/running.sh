@@ -1,22 +1,24 @@
 
-ssh grieg
-
-source /srvr/z5216214/env
-$ mkdir -p /srvr/z5216214/testing/
-$ cd /srvr/z5216214/testing/
-$ cp -P /web/cs9315/21T1/assignments/ass1/testing/tests .
-$ cp -P /web/cs9315/21T1/assignments/ass1/testing/run_test.py .
-$ cp -P /web/cs9315/21T1/assignments/ass1/testing/Makefile .
-$ cp -P /web/cs9315/21T1/assignments/ass1/testing/intset.drop.sql .
-
-
-cd srvr/z5216214/testing/
+#ssh grieg
 
 cp -rf intset.c /srvr/z5216214/postgresql-12.5/src/tutorial/
 cp -rf intset.source /srvr/z5216214/postgresql-12.5/src/tutorial/
 
 
-#ssh grieg
-#cd /srvr/z5216214/testing/
+
+
+cd /srvr/z5216214/testing/
+cp ../postgresql-12.5/src/tutorial/intset.c .
+cp ../postgresql-12.5/src/tutorial/intset.source .
+
+
 source /srvr/z5216214/env
-./run_test.py --timeout
+
+
+#source /srvr/z5216214/env
+
+./run_test.py
+
+ # Lots of output
+# Run all tests in the tests/ directory but only show ones that are failing: $
+./run_test.py TRUE

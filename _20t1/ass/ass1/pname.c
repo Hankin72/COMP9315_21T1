@@ -226,6 +226,7 @@ pname_out(PG_FUNCTION_ARGS)
 {
 	PersonName    *str = (PersonName *) PG_GETARG_POINTER(0);
 	int len=VARSIZE_ANY_EXHDR(str);
+
 	char	   *result;
 	result = (char *) palloc(len);
 	snprintf(result, len, "%s", str->name);

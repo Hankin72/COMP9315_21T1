@@ -17,7 +17,7 @@
 #cp -rf test.sql /srvr/z5216214/postgresql-12.5/src/tutorial/
 
 
-cp -rf intset.c ~/postgresql-12.5/src/tutorial/
+cp -rf intset.c /srvr/z5216214/postgresql-12.5/src/tutorial/
 cp -rf intset.source ~/postgresql-12.5/src/tutorial/
 
 cp -rf Makefile ~/postgresql-12.5/src/tutorial/

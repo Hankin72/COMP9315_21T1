@@ -23,13 +23,13 @@ select * from tests;
 drop table if exists tests;
 create table tests (id integer primary key, iset intSet);
 insert into tests select * from mySets;
-update tests set iset = iset - '{3, 4}';
+update tests set iset = iset - '{3,4}';
 select * from tests;
 
 drop table if exists tests;
 create table tests (id integer primary key, iset intSet);
 insert into tests select * from mySets;
-update tests set iset = iset - '{1, 3, 5}';
+update tests set iset = iset - '{1,3,5}';
 select * from tests;
 
 drop table if exists tests;

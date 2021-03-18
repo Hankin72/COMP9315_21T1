@@ -7,7 +7,7 @@ insert into mySets values (2, '{1,3,1,3,1}');
 insert into mySets values (3, '{3,4,5}');
 insert into mySets values (4, '{4,5}');
 insert into mySets values (5, '{6}');
-insert into mySets values (6, '{}');
+insert into mySets values (6, '{0  }');
 select * from mySets order by id;
 
 --
@@ -36,4 +36,5 @@ select * from mySets order by id;
 -- insert into mySets values (110, '{{1,2,4,5}}');
 -- insert into mySets values (120, '{1,2,4,5}}');
 -- insert into mySets values (130, '{1 2 4 5}');
+-- insert into mySets values (150, '{0}');
 -- select * from mySets;

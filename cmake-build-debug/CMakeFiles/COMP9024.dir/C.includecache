@@ -15,4 +15,8 @@ stdlib.h
 -
 stdbool.h
 -
+ctype.h
+-
+regex.h
+-
 
