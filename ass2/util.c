@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+///  COMP9315_21T1_ass02  Haojin Guo z5216214
+
 void fatal(char *msg, char *usage)
 {
 	if (strcmp(usage,"") != 0) fprintf(stderr,"%s\n",usage);

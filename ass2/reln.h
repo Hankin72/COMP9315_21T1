@@ -37,6 +37,7 @@ typedef struct _RelnParams {
 	Count  tupsize;    // # bytes in tuples (all same size)
 	Count  tupPP;      // max tuples per page
 
+
 	Count  tk;         // bits set per attribute
 
 	Count  tm;         // width of tuple signature (#bits)
@@ -46,7 +47,10 @@ typedef struct _RelnParams {
 
 	Count  pm;         // width of page signature (#bits)
 	Count  psigSize;   // # bytes in page signature
+
 	Count  psigPP;     // max tuple signatures per page
+
+
 	Count  bm;         // width of bit-slice (=maxpages)
 
 

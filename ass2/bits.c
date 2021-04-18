@@ -11,7 +11,7 @@
 #include "bits.h"
 #include "page.h"
 
-///  COMP9315_21T1  Haojin Guo z5216214
+///  COMP9315_21T1_ass02  Haojin Guo z5216214
 
 
 typedef struct _BitsRep {
@@ -47,6 +47,7 @@ Bool bitIsSet(Bits b, int position) {
     // find the offset position in certain byte
     int array_position = position / 8;
     int offset_position = position % 8;
+
     if ((b->bitstring[array_position] & (1 << offset_position))) {
         return TRUE;
     }
@@ -58,13 +59,16 @@ Bool isSubset(Bits b1, Bits b2) {
     assert(b1 != NULL && b2 != NULL);
     assert(b1->nbytes == b2->nbytes);
     ///TODO
+    Bool flag = FALSE;
     for (int byte_index = 0; byte_index < b1->nbytes; byte_index++) {
-        b2->bitstring[byte_index] &= b1->bitstring[byte_index];
-        if ((b2->bitstring[byte_index]) == (b1->bitstring[byte_index])) {
-            return TRUE;
+        Byte b = b2->bitstring[byte_index] & b1->bitstring[byte_index];
+        if (b == (b1->bitstring[byte_index])) {
+            flag = TRUE;
+        } else {
+            return FALSE;
         }
     }
-    return FALSE; // remove this
+    return flag; // remove this
 }
 
 // set the bit at position to 1
@@ -129,6 +133,7 @@ void orBits(Bits b1, Bits b2) {
     assert(b1 != NULL && b2 != NULL);
     assert(b1->nbytes == b2->nbytes);
     ///TODO
+
     for (int byte_index = 0; byte_index < b1->nbytes; byte_index++) {
         b1->bitstring[byte_index] |= b2->bitstring[byte_index];
     }
@@ -138,13 +143,19 @@ void orBits(Bits b1, Bits b2) {
 // negative n gives right shift
 void shiftBits(Bits b, int n) {
     /// TODO
-    for (int byte_index = 0; byte_index < b->nbytes; byte_index++) {
-        if (n >= 0) {
-            b->bitstring[byte_index] = b->bitstring[byte_index] << n;
-        } else {
-            b->bitstring[byte_index] = b->bitstring[byte_index] >> abs(n);
+
+    Bits b_temp = newBits(b->nbits);
+//    printf("sdsadsa+===%d\\\n",b->nbits);
+    int i = 0;
+    while (i < b->nbits) {
+        if ((i + n >= 0) && (i + n < b->nbits) && (bitIsSet(b, i))) {
+            setBit(b_temp, i + n);
         }
+        i++;
     }
+    unsetAllBits(b);
+    orBits(b, b_temp);
+    freeBits(b_temp);
 }
 
 // get a bit-string (of length b->nbytes)

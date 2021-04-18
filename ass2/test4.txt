@@ -1,0 +1,310 @@
+data4 with SIMC
+./create R simc 20100 5 1000
+
+time ./insert R < data4
+
+./stats R
+Global Info:
+Dynamic:
+  #items:  tuples: 20000  tsigs: 20000  psigs: 241  bsigs: 5968
+  #pages:  tuples: 241  tsigs: 45  psigs: 49  bsigs: 46
+Static:
+  tups   #attrs: 5  size: 49 bytes  max/page: 83
+  sigs   simc  bits/attr: 9
+  tsigs  size: 72 bits (9 bytes)  max/page: 454
+  psigs  size: 5968 bits (746 bytes)  max/page: 5
+  bsigs  size: 248 bits (31 bytes)  max/page: 132
+
+./select R '4321263,?,?,?,?'
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   241
+# tuples examined:   20000
+# false match pages: 240
+
+./select R '4321263,?,?,?,?' t
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    45
+# signatures read:   20000
+# data pages read:   14
+# tuples examined:   1162
+# false match pages: 13
+
+./select R '4321263,?,?,?,?' p
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    49
+# signatures read:   241
+# data pages read:   1
+# tuples examined:   83
+# false match pages: 0
+
+./select R '4321263,?,?,?,?' b
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    9
+# signatures read:   9
+# data pages read:   1
+# tuples examined:   83
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036'
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   241
+# tuples examined:   20000
+# false match pages: 224
+
+./select R '?,?,a3-036,?,a5-036' t
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    45
+# signatures read:   20000
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036' p
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    49
+# signatures read:   241
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036' b
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    15
+# signatures read:   18
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+
+data4 with Catc
+./create R catc 20100 5 1000
+
+time ./insert R < data4
+
+./stats R
+Global Info:
+Dynamic:
+  #items:  tuples: 20000  tsigs: 20000  psigs: 241  bsigs: 5968
+  #pages:  tuples: 241  tsigs: 45  psigs: 49  bsigs: 46
+Static:
+  tups   #attrs: 5  size: 49 bytes  max/page: 83
+  sigs   catc
+  tsigs  size: 72 bits (9 bytes)  max/page: 454
+  psigs  size: 5968 bits (746 bytes)  max/page: 5
+  bsigs  size: 248 bits (31 bytes)  max/page: 132
+
+./select R '4321263,?,?,?,?'
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   241
+# tuples examined:   20000
+# false match pages: 240
+
+./select R '4321263,?,?,?,?' t
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    45
+# signatures read:   20000
+# data pages read:   3
+# tuples examined:   249
+# false match pages: 2
+
+./select R '4321263,?,?,?,?' p
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    49
+# signatures read:   241
+# data pages read:   1
+# tuples examined:   83
+# false match pages: 0
+
+./select R '4321263,?,?,?,?' b
+4321263,PZvmfQgLpQIjtOwHUaQD,a3-029,a4-029,a5-029
+Query Stats:
+# sig pages read:    5
+# signatures read:   7
+# data pages read:   1
+# tuples examined:   83
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036'
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   241
+# tuples examined:   20000
+# false match pages: 224
+
+./select R '?,?,a3-036,?,a5-036' t
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    45
+# signatures read:   20000
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036' p
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    49
+# signatures read:   241
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+./select R '?,?,a3-036,?,a5-036' b
+4321270,kSLWBTtfovXzIzTWpVvY,a3-036,a4-036,a5-036
+4322515,pPGHTKsiNqbuCnJfpPKW,a3-036,a4-285,a5-036
+4323760,wybGoqIrqJNXjwiyPvIt,a3-036,a4-202,a5-036
+4325005,yEBWJGhOfTRerDhMrDyY,a3-036,a4-119,a5-036
+4326250,kalXQYKCuEhaUigEzQey,a3-036,a4-036,a5-036
+4327495,YZevktnzhQnxNwNhGNTU,a3-036,a4-285,a5-036
+4328740,xGdxLsnnkeMboGGDbpNr,a3-036,a4-202,a5-036
+4329985,fZpELpcrTkFWczyOZBKi,a3-036,a4-119,a5-036
+4331230,CBCRvGbGrKUVTAnNVZcj,a3-036,a4-036,a5-036
+4332475,WMrvqqSsGnWTbRiBCfey,a3-036,a4-285,a5-036
+4333720,xTvLxstyKrisVqLtoOHN,a3-036,a4-202,a5-036
+4334965,ODzCbrkPkIelVMYGPgTt,a3-036,a4-119,a5-036
+4336210,WiLYEhFQbCFvfdVJCfjH,a3-036,a4-036,a5-036
+4337455,WMgEBLifZIAGevieEOoI,a3-036,a4-285,a5-036
+4338700,mXektBVrUHUJqQDPPDlu,a3-036,a4-202,a5-036
+4339945,CJNlMzIcVpSZOaGhOdvN,a3-036,a4-119,a5-036
+4341190,HwTdxWQpxsKjSmYLySFs,a3-036,a4-036,a5-036
+Query Stats:
+# sig pages read:    10
+# signatures read:   14
+# data pages read:   17
+# tuples examined:   1408
+# false match pages: 0
+
+
+make clean
+rm -f create insert select stats gendata dump x1 x2 x3 *.o

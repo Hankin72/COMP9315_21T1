@@ -9,6 +9,8 @@
 #include "query.h"
 #include "reln.h"
 #include "bits.h"
+#include "hash.h"
+
 
 Bits makePageSig(Reln, Tuple);
 void findPagesUsingPageSigs(Query);

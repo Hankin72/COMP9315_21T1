@@ -15,8 +15,8 @@
 // check whether a query is valid for a relation
 // e.g. same number of attributes
 
-///  COMP9315_21T1  Haojin Guo z5216214
 
+///  COMP9315_21T1_ass02  Haojin Guo z5216214
 
 
 int checkQuery(Reln r, char *q) {
@@ -65,7 +65,6 @@ Query startQuery(Reln r, char *q, char sigs) {
 void scanAndDisplayMatchingTuples(Query q) {
     assert(q != NULL);
     ///TODO
-
     // get the query relations
     Reln reln = q->rel;
     // get the number of pages
@@ -74,33 +73,33 @@ void scanAndDisplayMatchingTuples(Query q) {
     File datafile = dataFile(reln);
     //check the specific page
     // from curpageID =0 ... npages
-    q->curpage = 0;
-
-    while (q->curpage < npages) {
-        if (!bitIsSet(q->pages, q->curpage)) {
+    int i = 0;
+    while (i < npages) {
+        if (!bitIsSet(q->pages, i)) {
+            i ++;
             continue;
         }
         // fetch a Page from a file
         // store it in a newly-allocated memory buffer
-        Page currentpage = getPage(datafile, q->curpage);
+        Page currentpage = getPage(datafile, i);
         Count items = pageNitems(currentpage);
-
         Bool flag = FALSE;
         for (int tid = 0; tid < items; tid++) {
             Tuple cur_tuple = getTupleFromPage(reln, currentpage, tid);
-
             if (tupleMatch(reln, q->qstring, cur_tuple)) {
                 showTuple(reln, cur_tuple);
                 flag = TRUE;
             }
             q->ntuples++;
-            q->curtup++;
+            free(cur_tuple);
+//            q->curtup++;
         }
         if (flag == FALSE) {
             q->nfalse++;
         }
+        free(currentpage);
         q->ntuppages++;
-        q->curpage++;
+        i++;
     }
 }
 

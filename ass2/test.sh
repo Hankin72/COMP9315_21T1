@@ -1,5 +1,7 @@
 #chmod +x ./test.sh
 # ./test.sh
+rm -f R.bsig R.data R.info R.psig R.tsig
+
 make clean
 
 make
@@ -16,39 +18,38 @@ clear
 ./stats R
 
 
-#./select R '?,?,?,?,?,?' x | tail -6
-
 # 不实用signature 进行查询
 
 ./select R '1234999,?,?,?,?,?' x
-
+#
 # 使用tuple signature 进行查询
 
-#./select R '1234999,?,?,?,?,?' t
+./select R '1234999,?,?,?,?,?' t
 
-# 使用page signature 进行查询
+## 使用page signature 进行查询
+#
+./select R '1234999,?,?,?,?,?' p
 
-#./select R '1234999,?,?,?,?,?' p
+
 
 # 使用bit-sliced signature 进行查询
 
 ./select R '1234999,?,?,?,?,?' b
-#grep 'a3-241,a4-158,a5-407' R.in
+
+
+grep 'a3-241,a4-158,a5-407' R.in
 #
-#./select R '?,?,a3-241,a4-158,a5-407,?' x
+./select R '?,?,a3-241,a4-158,a5-407,?' x
 #
-#./select R '?,?,a3-241,a4-158,a5-407,?' t
-#
-#./select R '?,?,a3-241,a4-158,a5-407,?' p
-#
-#./select R '?,?,a3-241,a4-158,a5-407,?' b
+./select R '?,?,a3-241,a4-158,a5-407,?' t
+
+./select R '?,?,a3-241,a4-158,a5-407,?' p
+
+./select R '?,?,a3-241,a4-158,a5-407,?' b
 
 
 rm -f R.bsig R.data R.info R.psig R.tsig
-printf "\n"
 
-printf "make clean\n"
 make clean
-
 
 

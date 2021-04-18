@@ -14,7 +14,7 @@
 #include "hash.h"
 #include "psig.h"
 
-///  COMP9315_21T1  Haojin Guo z5216214
+///  COMP9315_21T1_ass02  Haojin Guo z5216214, update
 
 // open a file with a specified suffix
 // - always open for both reading and writing
@@ -35,8 +35,6 @@ Status newRelation(char *name, Count nattrs, float pF, char sigtype,
                    Count tk, Count tm, Count pm, Count bm) {
 
     Reln r = malloc(sizeof(RelnRep));
-
-
     RelnParams *p = &(r->params);
 
     assert(r != NULL);
@@ -72,39 +70,41 @@ Status newRelation(char *name, Count nattrs, float pF, char sigtype,
     r->tsigf = openFile(name, "tsig");
     r->psigf = openFile(name, "psig");
     r->bsigf = openFile(name, "bsig");
-    addPage(r->dataf); p->npages = 1; p->ntups = 0;
+    addPage(r->dataf);
+    p->npages = 1;
+    p->ntups = 0;
 
-    addPage(r->tsigf);p->tsigNpages = 1;p->ntsigs = 0;
-    addPage(r->psigf);p->psigNpages = 1; p->npsigs = 0;
+    addPage(r->tsigf);
+    p->tsigNpages = 1;
+    p->ntsigs = 0;
 
-//	addPage(r->bsigf); p->bsigNpages = 1; p->nbsigs = 0; // replace this
+    addPage(r->psigf);
+    p->psigNpages = 1;
+    p->npsigs = 0;
 
-    // Create a file containing "pm" all-zeroes bit-strings,
-    // each of which has length "bm" bits
+
+    addPage(r->bsigf);
+    p->bsigNpages = 1;
+    p->nbsigs = 0; // replace this
+
+
+    ///Create a file containing "pm" all-zeroes bit-strings,
+    /// each of which has length "bm" bits
     ///TODO
     Count pm_ = psigBits(r);  // get pm:  // width of page signature (#bits)
     Count bm_ = bsigBits(r);  // width of bit-slice (=maxpages)
     Count bc = maxBsigsPP(r); //Maximum capacity per page for tuples
     File bit_files = bsigFile(r);
 
-    int index = 0;
-
-    // // number of bsig pages : bsigNpages
-    PageID pid = p->bsigNpages - 1;
-    Page curBitPage = getPage(bit_files, pid);
-
-    do {
-        // // number of bsig pages : bsigNpages
-//        PageID pid = p->bsigNpages - 1;
-//        Page curBitPage = getPage(bit_files, pid);
-        // if the curBitPage is full,
-//        Count bit_each_slice_items = pageNitems(curBitPage);
+    for (int index = 0; index < pm_; index++) {
+        PageID pid = p->bsigNpages - 1;
+        Page curBitPage = getPage(bit_files, pid);
+        // if it full
         if (pageNitems(curBitPage) == bc) {
             addPage(bit_files);
-            p->bsigNpages++;
+            p->bsigNpages++;  // / number of bsig pages
             pid++;
             free(curBitPage);
-
             curBitPage = newPage();
             if (curBitPage == NULL) {
                 return NO_PAGE;
@@ -114,17 +114,11 @@ Status newRelation(char *name, Count nattrs, float pF, char sigtype,
         Bits bit_sig = newBits(bm_);
         putBits(curBitPage, pageNitems(curBitPage), bit_sig);
         addOneItem(curBitPage);
-        p->nbsigs++;
+        p->nbsigs++;  // number of bit-sliced sigs (bsigs)
         // write into the file
         putPage(bit_files, pid, curBitPage);
-
         free(bit_sig);
-
-        index++;
-
-    } while (index < pm_);
-
-
+    }
     closeRelation(r);
     return 0;
 }
@@ -190,76 +184,69 @@ PageID addToRelation(Reln r, Tuple t) {
     pid = rp->npages - 1;
     p = getPage(r->dataf, pid);
 
-    Bool flag = FALSE;
+//    Bool flag = FALSE;
     // check if room on last page; if not add new page
     if (pageNitems(p) == rp->tupPP) {
         addPage(r->dataf);
         rp->npages++;
         pid++;
         free(p);
-
         //  added a page? need check below
         p = newPage();
         if (p == NULL) return NO_PAGE;
-        flag = TRUE;
+//        flag = TRUE;
     }
     addTupleToPage(r, p, t);
     rp->ntups++;  //written to disk in closeRelation()
     putPage(r->dataf, pid, p);
 
 
-
     /// compute tuple signature and add to tsigf
     ///TODO
     // // number of tsig pages. get curr tuple page
     Bits tuple_sig = makeTupleSig(r, t);
-
-    PageID tuple_sig_page_id = rp->tsigNpages -1;  // nTsigPages(REL)  (REL)->params.tsigNpages // number of tsig pages
-
+    PageID tuple_sig_page_id = rp->tsigNpages - 1;  // nTsigPages(REL)  (REL)->params.tsigNpages // number of tsig pages
     File tuple_file = tsigFile(r); // r-> tsigf
-
-    Page  tuple_sig_page = getPage(tuple_file, tuple_sig_page_id);
+    Page tuple_sig_page = getPage(tuple_file, tuple_sig_page_id);
     // Count tuple_items = pageNitems(tuple_sig_page);  // the number of tuples in tuple_sig_page,,
-
     Count max_tuple_sig = maxTsigsPP(r); //(REL)->params.tsigPP
     // // check if room on last page; if not add new page
-    if (pageNitems(tuple_sig_page) == max_tuple_sig){
+    if (pageNitems(tuple_sig_page) == max_tuple_sig) {
         addPage(tuple_file);
         // number of tsig pages
-        rp->tsigNpages ++;
-        tuple_sig_page_id ++;
+        rp->tsigNpages++;
+        tuple_sig_page_id++;
         free(tuple_sig_page);
-        tuple_sig_page =newPage();
+        tuple_sig_page = newPage();
         if (tuple_sig_page == NULL) {
             return NO_PAGE;
         }
     }
-    putBits(tuple_sig_page, pageNitems(tuple_sig_page) , tuple_sig);
+    putBits(tuple_sig_page, pageNitems(tuple_sig_page), tuple_sig);
     // add one item
     addOneItem(tuple_sig_page);
     // number of tuple signatures (tsigs)
-    rp->ntsigs ++;
+    rp->ntsigs++;
     // write into file
     putPage(tuple_file, tuple_sig_page_id, tuple_sig_page);
-
+    freeBits(tuple_sig);
 
     /// compute page signature and add to psigf
     ///TODO
-    Bits page_sig = makePageSig(r,t);
-    PageID page_sig_pid = nPsigPages(r) -1;  // nPsigPages(r)
+    Bits page_sig = makePageSig(r, t);
+    PageID page_sig_pid = nPsigPages(r) - 1;  // nPsigPages(r)
     File page_file = psigFile(r);  //(REL)->psigf
     Page page_sig_page = getPage(page_file, page_sig_pid);
-
-    if (flag == TRUE){
+    Count num_page_sig = nPsigs(r);   //number of page signatures (psigs) (REL)->params.npsigs
+    Count num_data_page = nPages(r);       // (REL)->params.npages  // number of data pages
+    if (num_page_sig != num_data_page) {
         // check if the page is full
-        Count max_psig_pp = maxPsigsPP(r);
-
-        if (pageNitems(page_sig_page) ==  max_psig_pp){
+        if (pageNitems(page_sig_page) == maxPsigsPP(r)) {
             addPage(page_file);
-            rp->psigNpages ++;
+            rp->psigNpages++;
             page_sig_pid++;
             free(page_sig_page);
-            page_sig_page =newPage();
+            page_sig_page = newPage();
             if (page_sig_page == NULL) {
                 return NO_PAGE;
             }
@@ -267,60 +254,59 @@ PageID addToRelation(Reln r, Tuple t) {
         // create new page
         putBits(page_sig_page, pageNitems(page_sig_page), page_sig);
         addOneItem(page_sig_page);
-        rp->npsigs ++;  // number of page signatures (psigs)
-        // write into file
-//        putPage(page_file, page_sig_pid, page_sig_page);
-    }else{
-        Count curr_pm = psigBits(r);
-        Bits curr_page_sig = newBits(curr_pm);
-        // already have the page
-        Count position = pageNitems(page_sig_page)-1;
+        rp->npsigs++;      // number of page signatures (psigs)
+        putPage(page_file, page_sig_pid, page_sig_page);
+    } else {
+        Count _pm = psigBits(r);  // // width of page signature (#bits)
 
-        getBits(page_sig_page, position, curr_page_sig);
-        //
-        orBits(page_sig, curr_page_sig);
+        Bits P_page_sig = newBits(_pm);
+
+        Count position = pageNitems(page_sig_page) - 1;
+        getBits(page_sig_page, position, P_page_sig);
+        orBits(page_sig, P_page_sig);
         // merge together
         putBits(page_sig_page, position, page_sig);
-        // write the page into file
-//        putPage(page_file, page_sig_pid, page_sig_page);
-    } putPage(page_file, page_sig_pid, page_sig_page);
+        freeBits(P_page_sig);
+        putPage(page_file, page_sig_pid, page_sig_page);
+    }
+    freeBits(page_sig);
+
 
 
     ///use page signature to update bit-slices
     ///TODO
 
-    int bit_page;
-    int bit_page_offset;
+    Bits psig_b = makePageSig(r, t);
     Count bc = maxBsigsPP(r);
-    // pm = psigBits(r)
-    // bm = bsigBits(r)
-    int  bitpage_index =  nPsigs(r)-1;
+    Count _pm = psigBits(r);
+    Count _bm = bsigBits(r);
+    File bslice_file = bsigFile(r);
+    PageID b_pid = nPsigs(r) - 1;
 
-    for (int index = 0; index < psigBits(r); index++){
-        if (bitIsSet(page_sig, index)){
-            // curr page id
-            bit_page = index / bc;
-            // curr page
-            bit_page_offset = index % bc;
+    for (int index = 0; index < _pm; index++) {
 
-            Page curr_bit_slice_page = getPage(bsigFile(r), bit_page);
+        if (!bitIsSet(psig_b, index)) {
+            continue;
 
-            Bits bit_slice = newBits(bsigBits(r));
-
-            getBits(curr_bit_slice_page, bit_page_offset, bit_slice);
+        } else {
+            Bits temp_bslice_sig = newBits(_bm);
+            int bit_page_id = index / bc;  // curr page id
+            int bit_page_offset = index % bc;  // curr page offset
+            Page curr_page = getPage(bslice_file, bit_page_id);
+            getBits(curr_page, bit_page_offset, temp_bslice_sig);
             // write in current bit-sliced index, get the bits and then set 1;
 
-            setBit(bit_slice, bitpage_index);
+            setBit(temp_bslice_sig, b_pid);
 
             // write bit_sliced signature into the page
-            putBits(curr_bit_slice_page, bit_page_offset, bit_slice);
+            putBits(curr_page, bit_page_offset, temp_bslice_sig);
             // write the page into file
-            putPage(bsigFile(r), bit_page, curr_bit_slice_page );
-
-            free(bit_slice);
-
+            putPage(bslice_file, bit_page_id, curr_page);
+            free(temp_bslice_sig);
         }
+
     }
+    freeBits(psig_b);
     return nPages(r) - 1;
 }
 

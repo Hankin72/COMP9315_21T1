@@ -1,0 +1,237 @@
+data1 with SIMC
+./create R simc 2100 3 100
+
+time ./insert R < data1
+
+./stats R
+Global Info:
+Dynamic:
+  #items:  tuples: 2000  tsigs: 2000  psigs: 18  bsigs: 3336
+  #pages:  tuples: 18  tsigs: 2  psigs: 2  bsigs: 3
+Static:
+  tups   #attrs: 3  size: 35 bytes  max/page: 116
+  sigs   simc  bits/attr: 6
+  tsigs  size: 32 bits (4 bytes)  max/page: 1023
+  psigs  size: 3336 bits (417 bytes)  max/page: 9
+  bsigs  size: 24 bits (3 bytes)  max/page: 1364
+
+./select R '1234576,?,?'
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   18
+# tuples examined:   2000
+# false match pages: 17
+
+./select R '1234576,?,?'' t
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    2
+# signatures read:   2000
+# data pages read:   11
+# tuples examined:   1276
+# false match pages: 10
+
+./select R '1234576,?,?' p
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    2
+# signatures read:   18
+# data pages read:   2
+# tuples examined:   232
+# false match pages: 1
+
+./select R '1234576,?,?' b
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    2
+# signatures read:   6
+# data pages read:   2
+# tuples examined:   232
+# false match pages: 1
+
+./select R '?,?,a3-027'
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   18
+# tuples examined:   2000
+# false match pages: 10
+
+./select R '?,?,a3-027' t
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   2000
+# data pages read:   13
+# tuples examined:   1508
+# false match pages: 5
+
+./select R '?,?,a3-027' p
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   18
+# data pages read:   8
+# tuples examined:   928
+# false match pages: 0
+
+./select R '?,?,a3-027' b
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   6
+# data pages read:   8
+# tuples examined:   928
+# false match pages: 0
+
+
+data1 with Catc
+./create R catc 2100 3 100
+
+time ./insert R < data1
+
+./stats R
+Global Info:
+Dynamic:
+  #items:  tuples: 2000  tsigs: 2000  psigs: 18  bsigs: 3336
+  #pages:  tuples: 18  tsigs: 2  psigs: 2  bsigs: 3
+Static:
+  tups   #attrs: 3  size: 35 bytes  max/page: 116
+  sigs   catc
+  tsigs  size: 32 bits (4 bytes)  max/page: 1023
+  psigs  size: 3336 bits (417 bytes)  max/page: 9
+  bsigs  size: 24 bits (3 bytes)  max/page: 1364
+
+./select R '1234576,?,?'
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   18
+# tuples examined:   2000
+# false match pages: 17
+
+./select R '1234576,?,?'' t
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    2
+# signatures read:   2000
+# data pages read:   2
+# tuples examined:   232
+# false match pages: 1
+
+./select R '1234576,?,?' p
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    2
+# signatures read:   18
+# data pages read:   2
+# tuples examined:   232
+# false match pages: 1
+
+./select R '1234576,?,?' b
+1234576,awEFaGrmUjnqEnSxrLgS,a3-009
+Query Stats:
+# sig pages read:    1
+# signatures read:   4
+# data pages read:   2
+# tuples examined:   232
+# false match pages: 1
+
+./select R '?,?,a3-027'
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    0
+# signatures read:   0
+# data pages read:   18
+# tuples examined:   2000
+# false match pages: 10
+
+./select R '?,?,a3-027' t
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   2000
+# data pages read:   8
+# tuples examined:   928
+# false match pages: 0
+
+./select R '?,?,a3-027' p
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   18
+# data pages read:   8
+# tuples examined:   928
+# false match pages: 0
+
+./select R '?,?,a3-027' b
+1234594,YmwYaxgEkCGiwUVQPgLT,a3-027
+1234843,IckiDqQVPZUErIVCZhlT,a3-027
+1235092,FXBkBfKdOhAxAelJUOKy,a3-027
+1235341,CjZqKGdFcjLOZYhXAkpW,a3-027
+1235590,UKTXfouZevdLgqfIWeJi,a3-027
+1235839,nkCjJcREMPdcPSivkpHW,a3-027
+1236088,DNPbsXeuKrkfaBPqzxSy,a3-027
+1236337,hxjNCGXXEpODhzhCAQtE,a3-027
+Query Stats:
+# sig pages read:    2
+# signatures read:   4
+# data pages read:   8
+# tuples examined:   928
+# false match pages: 0
+
+make clean
+rm -f create insert select stats gendata dump x1 x2 x3 *.o

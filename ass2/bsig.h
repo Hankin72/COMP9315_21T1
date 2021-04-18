@@ -9,6 +9,9 @@
 #include "query.h"
 #include "reln.h"
 #include "bits.h"
+#include "psig.h"
+
+
 
 void findPagesUsingBitSlices(Query);
 
