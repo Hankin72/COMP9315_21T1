@@ -1,0 +1,14 @@
+<svg width="179.99999999999997" height="50" xmlns="http://www.w3.org/2000/svg">
+ <title>film</title>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="52" width="182" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="null" id="svg_1" d="m31.562407,18.928346l0,18.375017l19.812536,0l0,-18.375017l-19.812536,0zm3.714851,16.843766l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm0,-6.125006l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm0,-6.125006l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm11.144552,12.250011l-9.906268,0l0,-15.312514l9.906268,0l0,15.312514zm3.714851,0l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm0,-6.125006l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm0,-6.125006l-2.476567,0l0,-3.062503l2.476567,0l0,3.062503zm-11.144552,0l0,9.187509l4.953134,-4.593754l-4.953134,-4.593754z"/>
+  <text stroke="null" transform="matrix(1,0,0,1.1537612676620483,0,-7.4478114023804665) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="40" id="svg_2" y="39.768442" x="1.718951" stroke-opacity="null" stroke-width="0" fill="#000000">A</text>
+  <text stroke="null" transform="matrix(1.8450679779052732,0,0,1.4121575355529785,-69.67849537730217,-20.73667600750923) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="34" id="svg_3" y="42.353521" x="64.447762" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#000000">ligei</text>
+ </g>
+</svg>
