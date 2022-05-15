@@ -10,6 +10,8 @@ scp ./running.sh z5216214@grieg.cse.unsw.edu.au:~/Documents/
 
 
 
+scp z5216214@grieg.cse.unsw.edu.au:~/Documents/intset.sql ./
+
 #cp -rf intset.c /srvr/z5216214/postgresql-12.5/src/tutorial/
 #cp -rf intset.source /srvr/z5216214/postgresql-12.5/src/tutorial/
 #

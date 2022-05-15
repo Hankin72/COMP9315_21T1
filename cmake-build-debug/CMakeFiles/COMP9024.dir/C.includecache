@@ -19,4 +19,12 @@ ctype.h
 -
 regex.h
 -
+math.h
+-
+string.h
+-
+stdio.h
+-
+stdlib.h
+-
 

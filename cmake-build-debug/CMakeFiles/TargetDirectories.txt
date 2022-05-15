@@ -1,3 +1,5 @@
 /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/final.dir
+/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/x1_test.dir
 /Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/CMakeFiles/COMP9024.dir

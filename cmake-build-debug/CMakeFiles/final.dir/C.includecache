@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bnl.c
+stdio.h
+-
+stdlib.h
+-
+bufpool.h
+/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.h
+
+/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+assert.h
+-
+bufpool.h
+/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.h
+
+/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.h
+

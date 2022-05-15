@@ -76,7 +76,6 @@ static bool is_valid(char *target, bool test_empty)
     } else {
         pattern = "^[ ]*[\\{]{1}[ ]*[\\}]{1}[ ]*$";
     }
-    
 
     cflag = REG_NOSUB | REG_EXTENDED;
     regcomp(&complied, pattern, cflag);
@@ -84,6 +83,8 @@ static bool is_valid(char *target, bool test_empty)
     regfree(&complied);
     return valid;
 }
+
+
 
 static void merge(int* array, int left, int mid, int right, int* helper) {
     int left_idx;
@@ -116,6 +117,7 @@ static void merge_sort(int* array, int left, int right, int *helper) {
     merge_sort(array, left + (right - left) / 2 + 1, right, helper);
     merge(array, left, left + (right - left) / 2, right, helper);
 }
+
 
 static bool search(int* array, int left, int right, int target) {
     int mid;
@@ -173,6 +175,7 @@ intset_in(PG_FUNCTION_ARGS)
     if (is_valid(str, true)) {
         length = 0;
     }
+
 
     for (int i = 0; i < length && str[i] != '\0'; i++) {
         if (str[i] == '{' || str[i] == ' ') {
@@ -609,6 +612,9 @@ intset_difference(PG_FUNCTION_ARGS)
     free(tempArray);
     PG_RETURN_POINTER(result);
 }
+
+
+
 
 /************************** 
  *  methods of hashTable  *

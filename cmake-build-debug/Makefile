@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named final
+
+# Build rule for target.
+final: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 final
+.PHONY : final
+
+# fast build rule for target.
+final/fast:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/build
+.PHONY : final/fast
+
+#=============================================================================
+# Target rules for targets named x1_test
+
+# Build rule for target.
+x1_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 x1_test
+.PHONY : x1_test
+
+# fast build rule for target.
+x1_test/fast:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/build
+.PHONY : x1_test/fast
+
+#=============================================================================
 # Target rules for targets named COMP9024
 
 # Build rule for target.
@@ -150,6 +176,357 @@ Codes/practice.c.s:
 	$(MAKE) -f CMakeFiles/COMP9024.dir/build.make CMakeFiles/COMP9024.dir/Codes/practice.c.s
 .PHONY : Codes/practice.c.s
 
+ass2/bits.o: ass2/bits.c.o
+
+.PHONY : ass2/bits.o
+
+# target to build an object file
+ass2/bits.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bits.c.o
+.PHONY : ass2/bits.c.o
+
+ass2/bits.i: ass2/bits.c.i
+
+.PHONY : ass2/bits.i
+
+# target to preprocess a source file
+ass2/bits.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bits.c.i
+.PHONY : ass2/bits.c.i
+
+ass2/bits.s: ass2/bits.c.s
+
+.PHONY : ass2/bits.s
+
+# target to generate assembly for a file
+ass2/bits.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bits.c.s
+.PHONY : ass2/bits.c.s
+
+ass2/bsig.o: ass2/bsig.c.o
+
+.PHONY : ass2/bsig.o
+
+# target to build an object file
+ass2/bsig.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bsig.c.o
+.PHONY : ass2/bsig.c.o
+
+ass2/bsig.i: ass2/bsig.c.i
+
+.PHONY : ass2/bsig.i
+
+# target to preprocess a source file
+ass2/bsig.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bsig.c.i
+.PHONY : ass2/bsig.c.i
+
+ass2/bsig.s: ass2/bsig.c.s
+
+.PHONY : ass2/bsig.s
+
+# target to generate assembly for a file
+ass2/bsig.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/bsig.c.s
+.PHONY : ass2/bsig.c.s
+
+ass2/hash.o: ass2/hash.c.o
+
+.PHONY : ass2/hash.o
+
+# target to build an object file
+ass2/hash.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/hash.c.o
+.PHONY : ass2/hash.c.o
+
+ass2/hash.i: ass2/hash.c.i
+
+.PHONY : ass2/hash.i
+
+# target to preprocess a source file
+ass2/hash.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/hash.c.i
+.PHONY : ass2/hash.c.i
+
+ass2/hash.s: ass2/hash.c.s
+
+.PHONY : ass2/hash.s
+
+# target to generate assembly for a file
+ass2/hash.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/hash.c.s
+.PHONY : ass2/hash.c.s
+
+ass2/page.o: ass2/page.c.o
+
+.PHONY : ass2/page.o
+
+# target to build an object file
+ass2/page.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/page.c.o
+.PHONY : ass2/page.c.o
+
+ass2/page.i: ass2/page.c.i
+
+.PHONY : ass2/page.i
+
+# target to preprocess a source file
+ass2/page.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/page.c.i
+.PHONY : ass2/page.c.i
+
+ass2/page.s: ass2/page.c.s
+
+.PHONY : ass2/page.s
+
+# target to generate assembly for a file
+ass2/page.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/page.c.s
+.PHONY : ass2/page.c.s
+
+ass2/psig.o: ass2/psig.c.o
+
+.PHONY : ass2/psig.o
+
+# target to build an object file
+ass2/psig.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/psig.c.o
+.PHONY : ass2/psig.c.o
+
+ass2/psig.i: ass2/psig.c.i
+
+.PHONY : ass2/psig.i
+
+# target to preprocess a source file
+ass2/psig.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/psig.c.i
+.PHONY : ass2/psig.c.i
+
+ass2/psig.s: ass2/psig.c.s
+
+.PHONY : ass2/psig.s
+
+# target to generate assembly for a file
+ass2/psig.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/psig.c.s
+.PHONY : ass2/psig.c.s
+
+ass2/query.o: ass2/query.c.o
+
+.PHONY : ass2/query.o
+
+# target to build an object file
+ass2/query.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/query.c.o
+.PHONY : ass2/query.c.o
+
+ass2/query.i: ass2/query.c.i
+
+.PHONY : ass2/query.i
+
+# target to preprocess a source file
+ass2/query.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/query.c.i
+.PHONY : ass2/query.c.i
+
+ass2/query.s: ass2/query.c.s
+
+.PHONY : ass2/query.s
+
+# target to generate assembly for a file
+ass2/query.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/query.c.s
+.PHONY : ass2/query.c.s
+
+ass2/reln.o: ass2/reln.c.o
+
+.PHONY : ass2/reln.o
+
+# target to build an object file
+ass2/reln.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/reln.c.o
+.PHONY : ass2/reln.c.o
+
+ass2/reln.i: ass2/reln.c.i
+
+.PHONY : ass2/reln.i
+
+# target to preprocess a source file
+ass2/reln.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/reln.c.i
+.PHONY : ass2/reln.c.i
+
+ass2/reln.s: ass2/reln.c.s
+
+.PHONY : ass2/reln.s
+
+# target to generate assembly for a file
+ass2/reln.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/reln.c.s
+.PHONY : ass2/reln.c.s
+
+ass2/tsig.o: ass2/tsig.c.o
+
+.PHONY : ass2/tsig.o
+
+# target to build an object file
+ass2/tsig.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tsig.c.o
+.PHONY : ass2/tsig.c.o
+
+ass2/tsig.i: ass2/tsig.c.i
+
+.PHONY : ass2/tsig.i
+
+# target to preprocess a source file
+ass2/tsig.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tsig.c.i
+.PHONY : ass2/tsig.c.i
+
+ass2/tsig.s: ass2/tsig.c.s
+
+.PHONY : ass2/tsig.s
+
+# target to generate assembly for a file
+ass2/tsig.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tsig.c.s
+.PHONY : ass2/tsig.c.s
+
+ass2/tuple.o: ass2/tuple.c.o
+
+.PHONY : ass2/tuple.o
+
+# target to build an object file
+ass2/tuple.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tuple.c.o
+.PHONY : ass2/tuple.c.o
+
+ass2/tuple.i: ass2/tuple.c.i
+
+.PHONY : ass2/tuple.i
+
+# target to preprocess a source file
+ass2/tuple.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tuple.c.i
+.PHONY : ass2/tuple.c.i
+
+ass2/tuple.s: ass2/tuple.c.s
+
+.PHONY : ass2/tuple.s
+
+# target to generate assembly for a file
+ass2/tuple.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/tuple.c.s
+.PHONY : ass2/tuple.c.s
+
+ass2/util.o: ass2/util.c.o
+
+.PHONY : ass2/util.o
+
+# target to build an object file
+ass2/util.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/util.c.o
+.PHONY : ass2/util.c.o
+
+ass2/util.i: ass2/util.c.i
+
+.PHONY : ass2/util.i
+
+# target to preprocess a source file
+ass2/util.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/util.c.i
+.PHONY : ass2/util.c.i
+
+ass2/util.s: ass2/util.c.s
+
+.PHONY : ass2/util.s
+
+# target to generate assembly for a file
+ass2/util.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/util.c.s
+.PHONY : ass2/util.c.s
+
+ass2/x1.o: ass2/x1.c.o
+
+.PHONY : ass2/x1.o
+
+# target to build an object file
+ass2/x1.c.o:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/x1.c.o
+.PHONY : ass2/x1.c.o
+
+ass2/x1.i: ass2/x1.c.i
+
+.PHONY : ass2/x1.i
+
+# target to preprocess a source file
+ass2/x1.c.i:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/x1.c.i
+.PHONY : ass2/x1.c.i
+
+ass2/x1.s: ass2/x1.c.s
+
+.PHONY : ass2/x1.s
+
+# target to generate assembly for a file
+ass2/x1.c.s:
+	$(MAKE) -f CMakeFiles/x1_test.dir/build.make CMakeFiles/x1_test.dir/ass2/x1.c.s
+.PHONY : ass2/x1.c.s
+
+final/q2/bnl.o: final/q2/bnl.c.o
+
+.PHONY : final/q2/bnl.o
+
+# target to build an object file
+final/q2/bnl.c.o:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bnl.c.o
+.PHONY : final/q2/bnl.c.o
+
+final/q2/bnl.i: final/q2/bnl.c.i
+
+.PHONY : final/q2/bnl.i
+
+# target to preprocess a source file
+final/q2/bnl.c.i:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bnl.c.i
+.PHONY : final/q2/bnl.c.i
+
+final/q2/bnl.s: final/q2/bnl.c.s
+
+.PHONY : final/q2/bnl.s
+
+# target to generate assembly for a file
+final/q2/bnl.c.s:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bnl.c.s
+.PHONY : final/q2/bnl.c.s
+
+final/q2/bufpool.o: final/q2/bufpool.c.o
+
+.PHONY : final/q2/bufpool.o
+
+# target to build an object file
+final/q2/bufpool.c.o:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bufpool.c.o
+.PHONY : final/q2/bufpool.c.o
+
+final/q2/bufpool.i: final/q2/bufpool.c.i
+
+.PHONY : final/q2/bufpool.i
+
+# target to preprocess a source file
+final/q2/bufpool.c.i:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bufpool.c.i
+.PHONY : final/q2/bufpool.c.i
+
+final/q2/bufpool.s: final/q2/bufpool.c.s
+
+.PHONY : final/q2/bufpool.s
+
+# target to generate assembly for a file
+final/q2/bufpool.c.s:
+	$(MAKE) -f CMakeFiles/final.dir/build.make CMakeFiles/final.dir/final/q2/bufpool.c.s
+.PHONY : final/q2/bufpool.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -158,10 +535,51 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... final"
+	@echo "... x1_test"
 	@echo "... COMP9024"
 	@echo "... Codes/practice.o"
 	@echo "... Codes/practice.i"
 	@echo "... Codes/practice.s"
+	@echo "... ass2/bits.o"
+	@echo "... ass2/bits.i"
+	@echo "... ass2/bits.s"
+	@echo "... ass2/bsig.o"
+	@echo "... ass2/bsig.i"
+	@echo "... ass2/bsig.s"
+	@echo "... ass2/hash.o"
+	@echo "... ass2/hash.i"
+	@echo "... ass2/hash.s"
+	@echo "... ass2/page.o"
+	@echo "... ass2/page.i"
+	@echo "... ass2/page.s"
+	@echo "... ass2/psig.o"
+	@echo "... ass2/psig.i"
+	@echo "... ass2/psig.s"
+	@echo "... ass2/query.o"
+	@echo "... ass2/query.i"
+	@echo "... ass2/query.s"
+	@echo "... ass2/reln.o"
+	@echo "... ass2/reln.i"
+	@echo "... ass2/reln.s"
+	@echo "... ass2/tsig.o"
+	@echo "... ass2/tsig.i"
+	@echo "... ass2/tsig.s"
+	@echo "... ass2/tuple.o"
+	@echo "... ass2/tuple.i"
+	@echo "... ass2/tuple.s"
+	@echo "... ass2/util.o"
+	@echo "... ass2/util.i"
+	@echo "... ass2/util.s"
+	@echo "... ass2/x1.o"
+	@echo "... ass2/x1.i"
+	@echo "... ass2/x1.s"
+	@echo "... final/q2/bnl.o"
+	@echo "... final/q2/bnl.i"
+	@echo "... final/q2/bnl.s"
+	@echo "... final/q2/bufpool.o"
+	@echo "... final/q2/bufpool.i"
+	@echo "... final/q2/bufpool.s"
 .PHONY : help
 
 

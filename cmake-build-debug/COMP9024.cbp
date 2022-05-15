@@ -37,6 +37,86 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="final">
+				<Option output="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/final" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 final"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="final/fast">
+				<Option output="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/final" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 final/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="x1_test">
+				<Option output="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/x1_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 x1_test"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="x1_test/fast">
+				<Option output="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/x1_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 x1_test/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="COMP9024">
 				<Option output="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug/COMP9024" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/guohaojin/Documents/COMP9315_21T1/cmake-build-debug"/>
@@ -80,6 +160,81 @@
 		</Build>
 		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/Codes/practice.c">
 			<Option target="COMP9024"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/bits.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/bits.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/bsig.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/bsig.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/defs.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/hash.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/hash.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/page.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/page.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/psig.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/psig.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/query.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/query.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/reln.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/reln.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/tsig.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/tsig.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/tuple.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/tuple.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/util.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/util.h">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/ass2/x1.c">
+			<Option target="x1_test"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bnl.c">
+			<Option target="final"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.c">
+			<Option target="final"/>
+		</Unit>
+		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/final/q2/bufpool.h">
+			<Option target="final"/>
 		</Unit>
 		<Unit filename="/Users/guohaojin/Documents/COMP9315_21T1/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

@@ -22,3 +22,5 @@ source /srvr/z5216214/env
  # Lots of output
 # Run all tests in the tests/ directory but only show ones that are failing: $
 ./run_test.py TRUE
+
+./run_test.py TRUE --timeout=1

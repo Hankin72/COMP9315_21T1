@@ -68,10 +68,6 @@ Bits makePageSig(Reln r, Tuple t) {
                 freeBits(cw_s);
             } else {
                 if (sig_type == 'c'){
-//
-//                    Bits cw_c1 =  psig_codeword_s(attribute_value[index], p_m,  p_k);
-//                    orBits(p_sig, cw_c1);
-//                    freeBits(cw_c1);
 
                     if (index ==0){
                         Bits cw_c1 =  psig_codeword_c(attribute_value[index], p_m, m_c1,  k_c1);

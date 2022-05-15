@@ -7,10 +7,8 @@
 #include <stdbool.h>
 
 #include "postgres.h"
-
 #include "fmgr.h"
 #include "libpq/pqformat.h"        /* needed for send/recv functions */
-
 
 #include "utils/hashutils.h"
 #include "utils/builtins.h"
@@ -44,19 +42,19 @@ static char Sorting_element(int *array, int size) {
 
 //determine whether the inset is valid by regex expression
 // function used to compile the regrex and execute it
-static bool regexMatch(char * str, char * regexPattern) {
+static bool regexMatch(char *str, char *regexPattern) {
     regex_t reg_check;
     int output = false;
     int cflags;
-    cflags = REG_EXTENDED ;
+    cflags = REG_EXTENDED;
     // compile the regex
-    if(regcomp(&reg_check, regexPattern, cflags)){
+    if (regcomp(&reg_check, regexPattern, cflags)) {
         return false;
     }
     // execute the regex
-    if(regexec(&reg_check, str, 0, NULL, 0)) {
+    if (regexec(&reg_check, str, 0, NULL, 0)) {
         output = false;
-    }else{
+    } else {
         output = true;
     }
     // free the regex
@@ -64,9 +62,23 @@ static bool regexMatch(char * str, char * regexPattern) {
     return output;
 }
 
+
+
+
+
 static int valid_str(char *str) {
     int match_result;
-    char *re =  "([ ])*\\{([ ])*\\}([ ])*|([ ])*\\{([ ])*((([ ])*[0-9]*([ ])*)\\,([ ])*)*(([ ])*(([ ])*[0-9]*([ ])*))\\}([ ])*";
+
+    char *re = "\\s*[\\{]{1}\\s*([0-9]*\\s*[\\,]{1}\\s*[0-9]+)*\\s*[\\}]{1}\\s*||\\s*[\\{]{1}\\s*[\\}]{1}\\s*";
+
+//    char *re =  "^[ ]*[\\{]{1}[ ]*([0-9]+([ ]*[\\,]{1}[ ]*[0-9]+)*)*[ ]*[\\}]{1}[ ]*$" ;
+
+
+//    if (!test_empty) {
+//        pattern = "^[ ]*[\\{]{1}[ ]*([0-9]+([ ]*[\\,]{1}[ ]*[0-9]+)*)*[ ]*[\\}]{1}[ ]*$";
+//    } else {
+//        pattern = "^[ ]*[\\{]{1}[ ]*[\\}]{1}[ ]*$";
+//    }
 
     int result = false;
     match_result = regexMatch(str, re);
@@ -81,45 +93,68 @@ static int valid_str(char *str) {
 }
 
 
-static int intset_2_cstring(char *result, intSet *a, int allocate_len){
-    int index;
-    char left[10]="{";
-    char right[10] ="}";
-    char comma[10] =",";
-    char temp_str[32];
+//
+//static bool is_valid(char *target, bool test_empty)
+//{	/* check whether the input intset is valid. */
+//    bool valid;
+//    char *pattern;
+//    regex_t complied;
+//    int cflag;
+//
+//    if (!test_empty) {
+//        pattern = "^[ ]*[\\{]{1}[ ]*([0-9]+([ ]*[\\,]{1}[ ]*[0-9]+)*)*[ ]*[\\}]{1}[ ]*$";
+//    } else {
+//        pattern = "^[ ]*[\\{]{1}[ ]*[\\}]{1}[ ]*$";
+//    }
+//    cflag = REG_NOSUB | REG_EXTENDED;
+//    regcomp(&complied, pattern, cflag);
+//    valid = regexec(&complied, target, 0, NULL, 0) ? false : true;
+//    regfree(&complied);
+//    return valid;
+//}
 
+
+
+
+
+
+static int intset_2_cstring(char *result, intSet *intset_elements, int allocate_len) {
+    int index;
+    char left[10] = "{";
+    char right[10] = "}";
+    char comma[10] = ",";
+    char temp_str[32];
     result[0] = '\0';
-    index = a->intset[0];
-    if (index== 0){
+    index = intset_elements->intset[0];
+
+    if (index == 0) {
         strcat(result, left);
         strcat(result, right);
     }
     if (index > 0) {
         strcat(result, left);
-        sprintf(temp_str, "%d", a->intset[1]);
-
+        pg_ltoa(intset_elements->intset[1],temp_str);
+//        sprintf(temp_str, "%d", intset_elements->intset[1]);
         strcat(result, temp_str);
-
         for (int i = 1; i < index; i++) {
             strcat(result, comma);
-            sprintf(temp_str, "%d", a->intset[i + 1]);
+            pg_ltoa(intset_elements->intset[i+1],temp_str);
+//            sprintf(temp_str, "%d", intset_elements->intset[i + 1]);
 
-            if (strlen(result) > allocate_len - 34) {
-                allocate_len = allocate_len + allocate_len;
-                result = (char *) repalloc(result, sizeof(char) * allocate_len);
+            if (strlen(result) >= allocate_len - 34) {
+                allocate_len = 2 * allocate_len;
+                result = (char *) realloc(result, sizeof(char) * allocate_len);
             }
             strcat(result, temp_str);
         }
-        if (strlen(result) > allocate_len - 34) {
-            allocate_len = allocate_len + allocate_len;
-            result = (char *) repalloc(result, sizeof(char) * allocate_len);
+        if (strlen(result) >= allocate_len - 34) {
+            allocate_len = 2 * allocate_len;
+            result = (char *) realloc(result, sizeof(char) * allocate_len);
         }
-
         strcat(result, right);
     }
     return *result;
 }
-
 
 
 /*****************************************************************************
@@ -134,14 +169,19 @@ intset_in(PG_FUNCTION_ARGS) {
     char *str = PG_GETARG_CSTRING(0);
     intSet *result;
 
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int *array_intset;
     int index = 0;
-    int m, max;
-    int i, index_element_num;
-    int *arrayflag;
+    int rest_len; // 元素重复标志
+    int *result_temp;
+    int flag=0;
+
     const char delims[10] = "{ ,}";
     char *temp_result = NULL;
+
+//
+    elog(NOTICE, "==============================%s", str );
+
 
     if (!valid_str(str)) {
         ereport(ERROR,
@@ -149,61 +189,65 @@ intset_in(PG_FUNCTION_ARGS) {
                         errmsg("invalid input syntax for type %s: \"%s\"",
                                "intSet", str)));
     }
-    array_intset = (int *) palloc(sizeof(int) * allocate_len);
+
+
+    array_intset = (int *) malloc(sizeof(int) * allocate_len);
 
     temp_result = strtok(str, delims);
     while (temp_result != NULL) {
         if (index >= allocate_len) {
-            allocate_len = 2 * allocate_len;
-            array_intset = (int *) repalloc(array_intset, sizeof(int) * allocate_len);
+            allocate_len = 1.5 * allocate_len;
+            array_intset = (int *) realloc(array_intset, sizeof(int) * allocate_len);
         }
         // string to number
         array_intset[index] = atoi(temp_result);
         temp_result = strtok(NULL, delims);
         index++;
     }
+    if (index > 1){
 
-    if (index >1 ){
-        // Find the maximum value in the current array_set
-        max = array_intset[0];
-        for (m = 1; m < index; m++) {
-            if (max < array_intset[m]) {
-                max = array_intset[m];
+        result_temp = (int*)palloc(sizeof(int)*allocate_len);
+        rest_len = 0;
+
+        for (int i = 0; i < index; i++) {
+            flag = 0;
+            for (int j = 0; j < rest_len; j++) {
+                if (result_temp[j] == array_intset[i]) {
+                    flag = 1;
+                }
+            }
+            if (flag == 0) {
+                result_temp[rest_len++] = array_intset[i];
             }
         }
-        arrayflag = (int *) palloc(sizeof(int) * index);
-        // delete the duplicated elements(number)
-        for (i = 0; i <= max; i++) {
-            arrayflag[i] = false;
-        }
-        //delete Algorithm
-        for (i = 0; i < index; i++) {
-            arrayflag[array_intset[i]] = array_intset[i];
-        }
-        //Take out the effective number
-        for (i = 0, index_element_num = 0; i <= max; i++) {
-            if (arrayflag[i] != false) {
-                array_intset[index_element_num++] = arrayflag[i];
-            }
-        }
-        index = index_element_num;
-        // sorting the array_intset
-        Sorting_element(array_intset, index);
-    }
-    result = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index + 1)));
-    SET_VARSIZE(result, VARHDRSZ + (sizeof(int) * (index + 1)));
+        result_temp[rest_len] = '\0';
 
-    result->intset[0] = index;
-    for (int j = 0; j < index; j++) {
-        result->intset[j + 1] = array_intset[j];
+
+        Sorting_element(result_temp, rest_len);
+
+        result = (intSet *) palloc(VARHDRSZ + sizeof(int) + (sizeof(int) * rest_len));
+        SET_VARSIZE(result, VARHDRSZ + sizeof(int) + (sizeof(int) * rest_len));
+
+        result->intset[0] = rest_len;
+        for (int j = 0; j < rest_len; j++) {
+            result->intset[j + 1] = result_temp[j];
+        }
+    }else{
+
+        result = (intSet *) palloc(VARHDRSZ + sizeof(int) + (sizeof(int) * index));
+        SET_VARSIZE(result, VARHDRSZ + sizeof(int) + (sizeof(int) * index));
+        result->intset[0] = index;
+        result->intset[1] = array_intset[0];
     }
 
-//    free(arrayflag);
-//    free(array_intset);
-//    free(result);
-//    free(array_intset);
+
+//    free(result_temp);
+    free(array_intset);
+
     PG_RETURN_POINTER(result);
 }
+
+
 
 /*****************************************************************************
  * Output functions
@@ -214,19 +258,21 @@ PG_FUNCTION_INFO_V1(intset_out);
 Datum
 intset_out(PG_FUNCTION_ARGS) {
     intSet *intset_elements = (intSet *) PG_GETARG_POINTER(0);
+
     char *result;
     char *output;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
 
-    result = (char *) palloc(sizeof(char) * allocate_len);
+    result = (char *) malloc(sizeof(char) * allocate_len);
 
     intset_2_cstring(result, intset_elements, allocate_len);
 
     output = psprintf("%s", result);
 
+    free(result);
+
     PG_RETURN_CSTRING(output);
 }
-
 
 
 /*****************************************************************************
@@ -273,12 +319,12 @@ intset_supset(PG_FUNCTION_ARGS) {
     int count_right;
     int output;
     int *temp;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int index, t;
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
 
-    temp = (int *) palloc(sizeof(int) * allocate_len);
+    temp = (int *) malloc(sizeof(int) * allocate_len);
     index = 0;
     for (int i = 0; i < count_left; i++) {
         for (int j = 0; j < count_right; j++) {
@@ -286,7 +332,7 @@ intset_supset(PG_FUNCTION_ARGS) {
             if (t == 0) {
                 if (index >= allocate_len) {
                     allocate_len = 2 * allocate_len;
-                    temp = (int *) repalloc(temp, sizeof(int) * allocate_len);
+                    temp = (int *) realloc(temp, sizeof(int) * allocate_len);
                 }
                 temp[index] = intset_elements_1->intset[i + 1];
                 index++;
@@ -312,7 +358,7 @@ intset_supset(PG_FUNCTION_ARGS) {
             }
         }
     }
-//    free(temp);
+    free(temp);
     PG_RETURN_BOOL(output);
 }
 
@@ -331,11 +377,11 @@ intset_subset(PG_FUNCTION_ARGS) {
     int count_right;
     int output;
     int *temp;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int index, t;
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
-    temp = (int *) palloc(sizeof(int) * allocate_len);
+    temp = (int *) malloc(sizeof(int) * allocate_len);
     index = 0;
     for (int i = 0; i < count_left; i++) {
         for (int j = 0; j < count_right; j++) {
@@ -343,7 +389,7 @@ intset_subset(PG_FUNCTION_ARGS) {
             if (t == 0) {
                 if (index >= allocate_len) {
                     allocate_len = 2 * allocate_len;
-                    temp = (int *) repalloc(temp, sizeof(int) * allocate_len);
+                    temp = (int *) realloc(temp, sizeof(int) * allocate_len);
                 }
                 temp[index] = intset_elements_1->intset[i + 1];
                 index++;
@@ -369,7 +415,7 @@ intset_subset(PG_FUNCTION_ARGS) {
             }
         }
     }
-//    free(temp);
+    free(temp);
     PG_RETURN_BOOL(output);
 }
 
@@ -430,6 +476,7 @@ Datum
 intset_not_equal(PG_FUNCTION_ARGS) {
     intSet *intset_elements_1 = (intSet *) PG_GETARG_POINTER(0);
     intSet *intset_elements_2 = (intSet *) PG_GETARG_POINTER(1);
+
     int count_left;
     int count_right;
     int i;
@@ -471,13 +518,14 @@ intset_intersection(PG_FUNCTION_ARGS) {
     int count_left;
     int count_right;
     int *diff_inset_temp;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int index;
     int t;
-
-    diff_inset_temp = (int *) palloc(sizeof(int) * allocate_len);
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
+
+    diff_inset_temp = (int *) malloc(sizeof(int) * allocate_len);
+
     index = 0;
     for (int i = 0; i < count_left; i++) {
         for (int j = 0; j < count_right; j++) {
@@ -485,7 +533,7 @@ intset_intersection(PG_FUNCTION_ARGS) {
             if (t == 0) {
                 if (index >= allocate_len) {
                     allocate_len = 2 * allocate_len;
-                    diff_inset_temp = (int *) repalloc(diff_inset_temp, sizeof(int) * allocate_len);
+                    diff_inset_temp = (int *) realloc(diff_inset_temp, sizeof(int) * allocate_len);
                 }
                 diff_inset_temp[index] = intset_elements_1->intset[i + 1];
                 index++;
@@ -495,15 +543,15 @@ intset_intersection(PG_FUNCTION_ARGS) {
     // sorting if necessary
     Sorting_element(diff_inset_temp, index);
     // allocate address for tem_result_diff
-    output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index + 1)));
-    SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index + 1)));
+    output = (intSet *) palloc(VARHDRSZ + sizeof(int) + (sizeof(int) * index));
+    SET_VARSIZE(output, VARHDRSZ + sizeof(int) + (sizeof(int) * index));
 
     output->intset[0] = index;
 
     for (int i = 0; i < index; i++) {
         output->intset[i + 1] = diff_inset_temp[i];
     }
-//    free(diff_inset_temp);
+    free(diff_inset_temp);
     PG_RETURN_POINTER(output);
 }
 
@@ -520,21 +568,22 @@ intset_union(PG_FUNCTION_ARGS) {
     int count_left;
     int count_right;
     int *temp_output;
-    int allocate_len = 1000;
-    int index, max;
-    int *arrayflag;
-    int i, index_element_num;
+    int allocate_len = 2048;
+    int index;
+    int *result_temp;
+    int flag=0;
+    int rest_len;
 
 
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
-    temp_output = (int *) palloc(sizeof(int) * allocate_len);
+    temp_output = (int *) malloc(sizeof(int) * allocate_len);
     // putting the set A and B to together
     index = 0;
     for (int i = 0; i < count_left; i++) {
         if (index >= allocate_len) {
             allocate_len = 2 * allocate_len;
-            temp_output = (int *) repalloc(temp_output, sizeof(int) * allocate_len);
+            temp_output = (int *) realloc(temp_output, sizeof(int) * allocate_len);
         }
         temp_output[index] = intset_elements_1->intset[i + 1];
         index++;
@@ -542,44 +591,42 @@ intset_union(PG_FUNCTION_ARGS) {
     for (int j = 0; j < count_right; j++) {
         if (index >= allocate_len) {
             allocate_len = 2 * allocate_len;
-            temp_output = (int *) repalloc(temp_output, sizeof(int) * allocate_len);
+            temp_output = (int *) realloc(temp_output, sizeof(int) * allocate_len);
         }
         temp_output[index] = intset_elements_2->intset[j + 1];
         index++;
     }
 
-    // Find the maximum value in the current array_set
-    max = temp_output[0];
-    for (int m = 1; m < index; m++) {
-        if (max < temp_output[m])
-            max = temp_output[m];
-    }
-    arrayflag = (int *) palloc(sizeof(int) * index);
-    // delete the duplicated elements(number)
-    for (i = 0; i <= max; i++) {
-        arrayflag[i] = false;
-    }
-    //delete Algorithm
-    for (i = 0; i < index; i++) {
-        arrayflag[temp_output[i]] = temp_output[i];
-    }
-    //Take out the effective number
-    for (i = 0, index_element_num = 0; i <= max; i++) {
-        if (arrayflag[i] != false) {
-            temp_output[index_element_num++] = arrayflag[i];
+
+    result_temp = (int*)malloc(sizeof(int)*allocate_len);
+    rest_len=0;
+    for (int i = 0; i < index; i++) {
+        flag = 0;
+        for (int j = 0; j < rest_len; j++) {
+            // 每次都把结果数组遍历一遍, 与当前字符比较, 有重复
+            // 就标记为 1
+            if (result_temp[j] == temp_output[i]) {
+                flag = 1;
+            }
+        }
+        if (flag == 0) {
+            result_temp[rest_len++] = temp_output[i];
         }
     }
-    Sorting_element(temp_output, index_element_num);
-    output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
-    SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (index_element_num + 1)));
+    result_temp[rest_len] = '\0';
 
-    output->intset[0] = index_element_num;
 
-    for (int i = 0; i < index_element_num; i++) {
-        output->intset[i + 1] = temp_output[i];
+    Sorting_element(result_temp, rest_len);
+    output = (intSet *) palloc(VARHDRSZ + (sizeof(int) * (rest_len + 1)));
+    SET_VARSIZE(output, VARHDRSZ + (sizeof(int) * (rest_len + 1)));
+
+    output->intset[0] = rest_len;
+    for (int i = 0; i < rest_len; i++) {
+        output->intset[i + 1] = result_temp[i];
     }
-//    free(temp_output);
-//    free(arrayflag);
+    free(temp_output);
+    free(result_temp);
+
     PG_RETURN_POINTER(output);
 }
 
@@ -602,13 +649,13 @@ intset_disjunction(PG_FUNCTION_ARGS) {
     int *temp;
     int *temp2;
     int *temp_total;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int index_total = 0;
 
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
 
-    temp2 = (int *) palloc(sizeof(int) * allocate_len);
+    temp2 = (int *) malloc(sizeof(int) * allocate_len);
 
     for (i = 0; i < count_right; i++) {
         flag2 = 1;
@@ -619,7 +666,7 @@ intset_disjunction(PG_FUNCTION_ARGS) {
         if (flag2) {
             if (index2 >= allocate_len) {
                 allocate_len = 2 * allocate_len;
-                temp2 = (int *) repalloc(temp2, sizeof(int) * allocate_len);
+                temp2 = (int *) realloc(temp2, sizeof(int) * allocate_len);
             }
             temp2[index2] = intset_elements_2->intset[i + 1];
             index2++;
@@ -637,7 +684,7 @@ intset_disjunction(PG_FUNCTION_ARGS) {
         if (flag) {
             if (index >= allocate_len) {
                 allocate_len = 2 * allocate_len;
-                temp = (int *) repalloc(temp, sizeof(int) * allocate_len);
+                temp = (int *) realloc(temp, sizeof(int) * allocate_len);
             }
             temp[index] = intset_elements_1->intset[i + 1];
             index++;
@@ -647,8 +694,8 @@ intset_disjunction(PG_FUNCTION_ARGS) {
     temp_total = (int *) palloc(sizeof(int) * allocate_len);
     for (int m = 0; m < index; m++) {
         if (index_total >= allocate_len) {
-            allocate_len = 2 * allocate_len ;
-            temp_total = (int *) repalloc(temp_total, sizeof(int) * allocate_len);
+            allocate_len = 2 * allocate_len;
+            temp_total = (int *) realloc(temp_total, sizeof(int) * allocate_len);
         }
         temp_total[index_total] = temp[m];
         index_total++;
@@ -656,7 +703,7 @@ intset_disjunction(PG_FUNCTION_ARGS) {
     for (int n = 0; n < index2; n++) {
         if (index_total >= allocate_len) {
             allocate_len = 2 * allocate_len;
-            temp_total = (int *) repalloc(temp_total, sizeof(int) * allocate_len);
+            temp_total = (int *) realloc(temp_total, sizeof(int) * allocate_len);
         }
         temp_total[index_total] = temp2[n];
         index_total++;
@@ -670,10 +717,9 @@ intset_disjunction(PG_FUNCTION_ARGS) {
         output->intset[i + 1] = temp_total[i];
     }
 
-//    free(temp);
-//    free(temp2);
-//    free(temp_total);
-
+    free(temp);
+    free(temp2);
+    free(temp_total);
     PG_RETURN_POINTER(output);
 }
 
@@ -694,13 +740,13 @@ intset_diff(PG_FUNCTION_ARGS) {
     int flag;
     int index = 0;
     int *temp;
-    int allocate_len = 1000;
+    int allocate_len = 2048;
     int i, j;
 
     count_left = intset_elements_1->intset[0];
     count_right = intset_elements_2->intset[0];
 
-    temp = (int *) palloc(sizeof(int) * allocate_len);
+    temp = (int *) malloc(sizeof(int) * allocate_len);
 
     for (i = 0; i < count_left; i++) {
         flag = 1;
@@ -712,7 +758,7 @@ intset_diff(PG_FUNCTION_ARGS) {
         if (flag) {
             if (index >= allocate_len) {
                 allocate_len = 2 * allocate_len;
-                temp = (int *) repalloc(temp, sizeof(int) * allocate_len);
+                temp = (int *) realloc(temp, sizeof(int) * allocate_len);
             }
             temp[index] = intset_elements_1->intset[i + 1];
             index++;
