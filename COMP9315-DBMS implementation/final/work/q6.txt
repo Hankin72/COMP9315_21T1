@@ -1,0 +1,138 @@
+# COMP9315 21T1 Final Exam Q6
+  
+Type your answer(s) to replace the xxx's
+Submit this file as your answer for Q6
+
+
+R: bR = 40
+S:  bS = 20
+Buffers : N = 25 
+
+calculate minimum cost estimates for the (R ⋈ S) operation
+
+
+a.
+
+First, assuming:
+outer table: R
+inner table: S
+
+For block nested loop join, 
+because: bR=40 > N-2=23
+therefore, 
+
+cost = bR + bS*ceil(bR/N-2)
+     = 40 + 20*ceil(40/23)
+     = 40+ 20*2
+     = 80
+
+Here, when B <= 20, ceil(bR/N-2) = ceil(40/N-2) >=2, causing the cost increase.
+therefore, the minimum number of buffers B=21.
+
+
+b.
+
+For sort-merge join, where neither table is sorted initially,
+
+step1: 
+cost_R = 2*bR*(1+ceil(log_N-1(bR/N))) 
+       = 80*(1+1)
+       =160 
+
+cost_S = 2*bS*(1+ceil(log_N-1(bS/N)))
+       = 2*20*(1+ceil(log_24(20/25)))
+       = 40*(1+0)
+       = 40
+
+step2: merge sorted relations' cost is,
+
+cost_m = bR + bS
+     = 40+20
+     =60
+
+Then, total cost = cost_R+ cost_S + cost_m = 260
+and let ceil(log_N-1(bS/N) >= 0, 
+we can get when buffers B =19, the ceil(log_N-1(bS/N)>0, 
+and when buffers B =20, ceil(log_N-1(bS/N) =0;
+therefore, the minimum number of buffers is 20.
+
+
+
+c.
+
+For sort-merge join, where R is initially sorted, but S is not.
+
+First, the cost of sorting table R is, 
+
+cost 1 = 2*bS*(1+ceil(log_N-1(bS/N)))
+       = 2*20*(1+ceil(log_24(20/25)))
+       = 40*(1+0)
+       = 40
+
+Second: merge sorted relations' cost is,
+cost 2 = bR + bS
+       =40+20
+       =60
+Therefore,
+total cost = cost 1 + cost 2
+           =  140   + 60
+           = 100
+
+For buffers, let temp = ceil(log_N-1(bS/N)) 
+when B<=19,  the value log_N-1(bS/N) will be greater than 0, and temp >=1,
+therefore, the minimum number of buffers is B=20.
+
+
+d.
+
+For sort-merge join, where S is initially sorted, but R is not.
+First, the cost of sorting table S is,
+
+cost 1 = 2*bR*(1+ceil(log_N-1(bR/N)))
+
+       = 2*40*(1+ceil(log_24(40/25)))
+       = 80*(1+1)
+       = 160
+
+Second: merge sorted relations' cost is,
+cost 2 = bR + bS
+       =40+20
+       =60
+Therefore,
+
+total cost = cost 1 + cost 2
+           =   160  + 60
+           = 220
+
+For buffers, temp = ceil(log_N-1(bR/N))
+let log_N-1(bR/N) <1 , we can get N>6
+therefore, the minimum number of buffers B=7.
+
+
+
+ 
+
+e.
+
+For sort-merge join, where both tables are initially sorted.
+First, the cost of sorting R and S is,
+costR =0
+costS =0 
+
+Second: merge sorted relations' cost is,
+cost 2 = bR + bS + costR + costS
+       =40+20
+       =60
+Finally, 
+total cost = costR + costS+ cost2 = 60
+
+And the minimum number of buffers N =3, since, two table R and S need two buffers for input, and one buffer for output is needed.
+
+
+
+
+
+
+
+
+

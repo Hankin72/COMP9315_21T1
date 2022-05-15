@@ -1,0 +1,184 @@
+-----------------------------
+-- Creating a new type:
+--	We are going to create a new type called 'iset' which represents
+--	an int set.
+--	A user-defined type must have an input and an output function.  
+--  All of these are usually user-defined C functions.
+-----------------------------
+
+-- Assume the user defined functions are in _OBJWD_/iset$DLSUFFIX
+-- (we do not want to assume this is in the dynamic loader search path).
+-- Look at $PWD/iset.c for the source.  Note that we declare all of
+-- them as STRICT, so we do not need to cope with NULL inputs in the
+-- C code.  We also mark them IMMUTABLE, since they always return the
+-- same outputs given the same inputs.
+
+-- the input function 'iset_in' takes a null-terminated string (the
+-- textual representation of the type) and turns it into the internal
+-- (in memory) representation. You will get a message telling you 'iset'
+-- does not exist yet but that's okay.
+
+CREATE FUNCTION intset_in(cstring)
+   RETURNS intset
+   AS '_OBJWD_/intset'
+   LANGUAGE C IMMUTABLE STRICT;
+
+-- the output function 'iset_out' takes the internal representation and
+-- converts it into the int set representation.
+
+CREATE FUNCTION intset_out(intset)
+   RETURNS cstring
+   AS '_OBJWD_/intset'
+   LANGUAGE C IMMUTABLE STRICT;
+
+CREATE TYPE intset (
+    input = intset_in,
+    output = intset_out,
+    internallength = VARIABLE
+    -- alignment = int
+);
+
+-----------------------------
+-- Creating an operator for the new type:
+-----------------------------
+
+/* i <@ S intSet S contains the integer i */
+CREATE FUNCTION intset_contain_integer(int, intset)
+    RETURNS bool
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR <@ (
+    leftarg = int,
+    rightarg = intset,
+    procedure = intset_contain_integer,
+    commutator = <@
+);
+
+/* @ S number of distinct elements in S, |S| */
+CREATE FUNCTION intset_distinct_number(intset)
+    RETURNS INT
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR @ (
+    rightarg = intset,
+    procedure = intset_distinct_number
+    -- commutator = @
+);
+
+/* A @> B does intSet A contain only values in intSet B */
+CREATE FUNCTION intset_check_subset(intset, intset)
+    RETURNS bool
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR @> (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_check_subset,
+    commutator = @> 
+);
+
+/* A = B intSets A and B are equal */
+CREATE FUNCTION intset_check_equal(intset, intset)      
+    RETURNS bool
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR = (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_check_equal,
+    commutator = = 
+);
+
+/* A && B takes the set intersection */
+CREATE FUNCTION intset_set_intersection(intset, intset)
+    RETURNS intset
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR && (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_set_intersection,
+    commutator = &&
+);
+
+/* A || B takes the set union */
+CREATE FUNCTION intset_set_union(intset, intset)
+    RETURNS intset
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR || (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_set_union,
+    commutator = ||
+);
+
+/* A !! B takes the set union */
+CREATE FUNCTION intset_set_disjunction(intset, intset)
+    RETURNS intset
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR !! (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_set_disjunction,
+    commutator = !!
+);
+
+/* A !! B takes the set difference */
+CREATE FUNCTION intset_set_difference(intset, intset)
+    RETURNS intset
+    AS '_OBJWD_/intset'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR - (
+    leftarg = intset,
+    rightarg = intset,
+    procedure = intset_set_difference,
+    commutator = -
+);
+
+
+create table mySets (id integer PRIMARY Key, iset intSet);
+insert into mySets values (1, '{1,2,3}');
+insert into mySets values (2, '{1,3,1,3,1}');
+insert into mySets values (3, '{5,4,3}');
+
+insert into mySets values (4, '{4,5}');
+
+select * from mySets;
+
+select a.*, b.* from mySets a, mySets b
+where (b.iset @> a.iset) and a.id != b.id;
+
+update mySets set iset = iset || '{5,6,7,8}' where id = 4;
+select * from mySets;
+
+select a.*, b.* from mySets a, mySets b
+where (b.iset @> a.iset) and a.id != b.id;
+
+select id, iset, (@iset) as card from mySets order by id;
+
+select a.iset, b.iset, a.iset && b.iset
+from mySets a, mySets b where a.id < b.id;
+
+select * from mySets;
+
+select a.iset, b.iset, a.iset && b.iset
+from mySets a, mySets b where a.id < b.id;
+
+select a.iset, b.iset, a.iset || b.iset
+from mySets a, mySets b where a.id < b.id;
+
+select a.iset, b.iset, a.iset !! b.iset
+from mySets a, mySets b where a.id < b.id;
+
+select a.iset, b.iset, a.iset - b.iset
+from mySets a, mySets b where a.id < b.id;

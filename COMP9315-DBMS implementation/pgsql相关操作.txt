@@ -1,0 +1,77 @@
+// 解压 postgresql-12.5
+cd Downloads
+ls -l postgresql-12.5.tar.bz2
+tar xfj postgresql-12.5.tar.bz2 //unpack
+
+cd postgresql-12.5
+ls // see
+
+configure --prefix=(YourPGDir)  // e.g. configure --prefix=/Users/guohaojin/postgresql
+./configure --prefix=/Users/guohaojin/pgsql    // check
+
+make   // wait to ready to intall
+make install  // wait to PostgreSQL installation complete
+
+* ls /Users/guohaojin/postgresql/bin  // check initdb
+
+* PATH=/Users/guohaojin/postgresql/bin:$PATH  // change path
+* which initdb   // /Users/jas/pgsql/bin/initdb
+
+
+
+initdb -D /Users/guohaojin/postgresql/data  // creates YourPGDir
+
+pwd // check current path
+
+
+
+
+cd ~/ pgsql
+vi env 
+:r ../srvr/env    // read env 
+
+
+
+
+source ./env
+which initdb
+
+pwd
+cd data
+ls
+ls base     // 
+
+vi postgresql.conf
+:wq
+
+
+
+
+source /Users/guohaojin/postgresql/env
+pg1  // start
+
+psql -l  // find database
+
+createdb xyz
+psql xyz
+
+create table R (a int, b int);
+insert into R values (1,2), (2,3);
+
+select * from R;
+
+\q
+
+pg_ctl stop;
+
+
+
+
+=======================================================
+ssh zid@cse.unsw.edu.au
+ssh grieg.cse.unsw.edu.au
+
+
+
+
+

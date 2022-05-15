@@ -1,0 +1,42 @@
+# COMP9315 21T1 Final Exam Q8
+  
+Type your answer(s) to replace the xxx's
+Submit this file as your answer for Q8
+
+
+ +   +    +   +     +    +   +   +   +   +    +    +    +    +
+  
+T1:  S    R(A) R(B) V            W(A)  W(C)   F
+T2:       S R(B) V      W(D)     F
+T3:                     S     R(B)   V  W(E)W(E)   F
+T4:                              S  R(A)R(D)  V W(A)W(C) F
+ 
+ +   +    +   +     +    +   +   +   +   +    +    +    +    +
+ 
+
+a. Validation for T1
+
+xxx
+
+
+
+
+b. Validation for T2
+
+xxx
+
+
+
+
+
+c. Validation for T3
+
+xxx
+
+
+
+d. Validation for T4
+
+
+
+xxx

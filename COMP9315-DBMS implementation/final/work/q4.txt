@@ -1,0 +1,127 @@
+# COMP9315 21T1 Final Exam Q4
+
+Type your answer(s) to replace the xxx's
+Submit this file as your answer for Q4
+
+State before inserting 'e'
+
+b = 4, c=3 ,d=2,  sp=0 
+
+    sp-->[0] 00   d
+	[1] 01    a
+	[2] 10    b
+	[3] 11    c
+
+
+
+State after splitting and inserting 'e'
+
+b = 4, c=3 ,d =2, sp =1
+
+	[0] 000   
+  sp --> [1] 01    a,e
+	[2] 10    b
+	[3] 11    c
+	[4]100    d
+
+
+
+State before inserting 'j'
+
+
+b = 4, c=3 ,d =2, sp =1
+
+	[0] 000   h,
+  sp --> [1] 01   a, e, i 
+	[2] 10    b, f
+	[3] 11    c, g
+	[4]100    d
+
+
+
+
+
+
+State after splitting and inserting 'j'
+
+
+b = 4, c=3 ,d =2, sp=2
+
+	[0] 000   h,
+	[1] 001   a, i 
+  sp -->	[2] 10    b, f, j
+	[3] 11    c, g
+	[4] 100   d,
+	[5] 101	 e,
+
+
+State before inserting 'o'
+
+
+b = 4, c=3 ,d =2, sp=2
+
+	[0] 000   h,
+	[1] 001   a, i 
+  sp -->	[2] 10    b, f, j ->n,
+	[3] 11    c, g, k
+	[4] 100   d, l,
+	[5] 101	 e, m,
+
+
+State after splitting and inserting 'o'
+
+b = 4, c=3 ,d =2, sp= 3
+
+	  [0] 000   h,
+	  [1] 001   a, i 
+	  [2] 010    b, j,
+ sp -->    [3] 11    c, g, k ->o
+	  [4] 100   d, l,
+	  [5] 101   e, m,
+	  [6] 110   f, n
+
+State before inserting 't'
+
+
+b = 4, c=3 ,d =2, sp= 3
+
+	  [0] 000   h, p, 
+	  [1] 001   a, i ,q 
+	  [2] 010    b, j, r
+ sp -->    [3] 11    c, g, k  -> o,
+	  [4] 100   d, l, s, 
+	  [5] 101   e, m,
+	  [6] 110   f, n
+
+
+
+State after splitting and inserting 't'
+
+
+b = 8, c=3 ,d =3, sp= 0
+
+sp -->     [0] 000   h, p, 
+	  [1] 001   a, i ,q  -> t, 
+	  [2] 010    b, j, r
+ 	  [3] 011    c, k,
+	  [4] 100   d, l, s, 
+	  [5] 101   e, m,
+	  [6] 110   f, n
+	  [7]  111   g, o, 
+
+
+
+State after inserting 'x'
+
+
+b = 8, c=3, d =3, sp= 0, 
+
+sp -->     [0] 000   h, p, 
+	  [1] 001   a, i ,q  -> t, 
+	  [2] 010    b, j, r -> u, w,
+ 	  [3] 011    c, k,
+	  [4] 100   d, l, s, 
+	  [5] 101   e, m, x
+	  [6] 110   f, n
+	  [7]  111   g, o, v
+

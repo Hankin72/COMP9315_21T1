@@ -1,0 +1,14 @@
+0a1
+> Failed to find slot for S01
+2,12d2
+< 
+< Frames:     [00] [01]
+< Contents:    R02  S05
+< PinCount:      0    0
+< Popularity:    1    2
+< Clock: 0
+< 
+< #requests: 21
+< #releases: 21
+< #hits    : 0
+< #reads   : 21

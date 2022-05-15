@@ -1,0 +1,38 @@
+# COMP9315 20T1 Sample Exam Q4
+
+Type your answer(s) to replace the xxx's
+Note: each of (a) (b) (c) has four components (i) (ii) (iii) (iv)
+
+
+(a) One sequential scan of table P
+
+Buffer Pool
+Buffers  [0] [1] [2] [3] [4]
+Contents  -   -   -   -   -   initial state
+Contents  P0  -   -   -   -   after request P0
+...
+
+xxx
+
+
+
+(b) Two sequential scans of a table R
+
+Buffer Pool
+Buffers  [0] [1] [2] [3] [4]
+Contents  -   -   -   -   -   initial state
+Contents  R0  -   -   -   -   after request R0
+...
+
+xxx
+
+
+(c) Simple nested loop join on tables S and T
+
+Buffers  [0] [1] [2] [3] [4] [5] [6] [7] [8] [9]
+Contents  -   -   -   -   -   -   -   -   -   -   initial state
+Contents  S0  -   -   -   -   -   -   -   -   -   after request S0
+...
+
+xxx
+

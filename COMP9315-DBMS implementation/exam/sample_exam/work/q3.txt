@@ -1,0 +1,29 @@
+# COMP9315 20T1 Sample Exam Q3
+
+Type your answer(s) to replace the xxx's
+
+
+(a) number of tuples per page in People table
+
+xxx
+
+
+(b) number of pages in People table
+
+xxx
+
+
+(c) cost of duplicate removal using sorting
+
+xxx
+
+
+(d) cost of duplicate removal using hashing
+
+xxx
+
+
+(e) effect on hashing if only 91 buffers available
+
+xxx
+

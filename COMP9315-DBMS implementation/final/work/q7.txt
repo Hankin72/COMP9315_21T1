@@ -1,0 +1,35 @@
+# COMP9315 21T1 Final Exam Q7
+  
+Type your answer(s) to replace the xxx's
+Submit this file as your answer for Q7
+
+a.
+
+This is query plan is to scan all attributes,
+Therefore, the number of tuples in the People table is
+10000.
+
+
+b.
+Selected on indexed, unique attribute
+
+This query plan if to find all people with the id>9900;
+which, specifically, in other words, is,
+select * from People where id>9900
+
+
+c.
+
+Experssion. 
+Temp1 = Sel[name='Sales Department'](Department)
+Temp2 = Temp1 Join[j.fundedby = Temp1.id] Projects
+Temp3 = Temp2 Join[w.project = Temps.Projectid] WorksOn
+Result = Temps Join[P.id = Temp3.person]People
+
+
+
+
+d.
+
+xxx
+

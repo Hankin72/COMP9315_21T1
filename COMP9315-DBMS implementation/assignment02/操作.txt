@@ -1,0 +1,162 @@
+#define PAGESIZE    4096
+#define NO_PAGE     0xffffffff
+#define MAXERRMSG   200
+#define MAXTUPLEN   200
+#define MAXRELNAME  200
+#define MAXFILENAME MAXRELNAME+8
+#define OK          0
+#define NOT_OK      0xffffffff
+#define FALSE       0
+#define TRUE        1
+
+typedef char Bool;
+typedef unsigned char Byte;
+typedef int Status;
+typedef int File;
+typedef unsigned int Offset;
+typedef unsigned int Count;
+typedef unsigned int Word;
+typedef Offset PageID;
+
+
+【page操作】
+———— 方法 ——————
+Page newPage(); 		  	// 生成一个新的page，并返回（malloc）
+void addPage(File f);  		// 给 FILE 添加一页
+Page getPage(File f, PageID pid);  	// 从file中提取第pid个page，创建一个newPage，内容为pid的page，并返回（malloc）
+Status putPage(File f, PageID pid, Page p);   	// 写操作，把p写入f，同时free(p)
+Byte *addrInPage(Page p, int off, int size);		// 返回一个Byte数组，定位到第off个tuple，每个字段(属性)size大小
+Count pageNitems(Page);		// 返回一个page有多少个tuples
+void  addOneItem(Page);		// 在page 增加一个tuple的数量
+
+【relation操作】
+———— 属性 ——————
+ - - - - relation 参数 - - - - 
+nAttrs(REL);	(REL)->params.nattrs	// relation attribute（pd.columns）的格式
+tupSize(REL);	(REL)->params.tupsize	// 每个tuple的bytes
+sigType(REL);	(REL)->params.sigtype	// CATC == 'c', SIMC == 's'
+nPages(REL);	(REL)->params.npages	// data page的个数
+nTuples(REL);	(REL)->params.ntups		// tuples的数量
+maxTupsPP(REL);	(REL)->params.tupPP	// 每个page最多多少个tuple
+nTsigPages(REL);	(REL)->params.tsigNpages	// tuple signature pages的数量
+nTsigs(REL);	(REL)->params.ntsigs	// tuple signature 的数量
+maxTsigsPP(REL);	(REL)->params.tsigPP	// 每页page最多有多少个tuple signature
+nPsigPages(REL);	(REL)->params.psigNpages	// page signature page的数量
+nPsigs(REL);	(REL)->params.npsigs	// page signature的数量
+maxPsigsPP(REL);	(REL)->params.psigPP	// 每页page最多有多少page signature
+nBsigPages(REL);	(REL)->params.bsigNpages	// bit-sliced signature page的数量
+nBsigs(REL);	(REL)->params.nbsigs	// bit-sliced signature的数量
+maxBsigsPP(REL);	(REL)->params.bsigPP	// 每页page最多有多少个bit-sliced-signature
+codeBits(REL);	(REL)->params.tk		// 每个属性有多少个bits set
+tsigBits(REL);	(REL)->params.tm		// 每个tuple signature属性的bits宽度 （60个0101这种）
+
+psigBits(REL);	(REL)->params.pm		// 每个page signature属性的bits宽度
+bsigBits(REL);	(REL)->params.bm		// 每个bit-slice signature的bits宽度
+
+- - - - File 参数 - - - -
+dataFile(REL)    (REL)->dataf	// 处理数据文件
+tsigFile(REL)     (REL)->tsigf	// 处理tuple signature文件
+psigFile(REL)    (REL)->psigf	// 处理page signature文件
+bsigFile(REL)    (REL)->bsigf	// 处理bit-sliced signature文件
+
+———— 方法 ——————
+Status newRelation(char *name, Count nattrs, float pF, char sigtype,
+		Count tk, Count tm, Count pm, Count bm); 	
+					// 创建一个新的relation，参数为
+						表的名字name -> 字符串
+						表的属性个数 nattrs
+						错误匹配的概率 pF
+						sigtype （CATC == 'c', SIMC == 's'）
+						tk tm pm bm （bits属性）
+					
+Reln openRelation(char *name);		// 打开一个表 （复制操作 malloc）
+void closeRelation(Reln r);			// 关闭一个表 （自带free）
+Bool existsRelation(char *name);		// 判断这个表是否存在
+PageID addToRelation(Reln r, Tuple t);		// 将一个新的tuple插入relation中，并返回插入的pageID
+void relationStats(Reln r);			// 打印一个relation的状态
+
+【tuple操作】
+———— 方法 ——————
+Tuple readTuple(Reln r, FILE *f);			// 读取f中的下一个tuple，需要free
+char **tupleVals(Reln r, Tuple t);		// 将表r中的tuple拷贝出来，放入数组中并返回，free（malloc）
+void freeVals(char **vals, int nattrs);		// free
+Bool tupleMatch(Reln r, Tuple t1, Tuple t2);	// 判断表r中t1和t1是否匹配
+Status addTupleToPage(Reln r, Page p, Tuple t);	// 将表r的tuple t插入page p，返回OK/NOT_OK
+Tuple getTupleFromPage(Reln r, Page p, int i);	// 得到page中的第i个tuple （malloc）
+void showTuple(Reln r, Tuple t);			// 打印一个tuple
+
+
+【query操作】
+———— 属性 ——————
+Query -> 
+// 固定信息
+Reln    rel;       	// 查询的表
+char   *qstring;   	// 查询的字符串 tuple
+
+// 动态信息
+Bits    pages;     	// list of pages to examine
+PageID  curpage;   	// 当前查询的PageID
+Count   curtup;    	// 当前查询的tuple
+
+// 统计信息 需要维护
+Count   nsigs;     	// 已经读取的signatures数量
+Count   nsigpages; 	// 已经读取的signatures page数量
+Count   ntuples;   	// 已经读取的tuples数量
+Count   ntuppages; 	// 已经读取的tuples page数量
+Count   nfalse;    	// 没有匹配成功的pages数量
+
+———— 方法 ——————
+Query startQuery(Reln r, char *q, char sigs);	// 将一个字符串q ("1234,?,abc,?")做成Query，初始化并返回，
+					// sigs: 't', 'p', 'b', 除此之外就setAllBits
+void  scanAndDisplayMatchingTuples(Query);	// 扫描，找到匹配的tuples并打印，更新维护状态
+void  queryStats(Query);			// 打印状态
+void  closeQuery(Query);			// clean up a QueryRep object and associated data
+
+【Bits操作】
+———— 方法 ——————
+Bits newBits(int nbits);		// 创建一个新的Bits，总共nbits个0，ceil(nbits/8)个字段
+void freeBits(Bits b);			// free(b)
+Bool bitIsSet(Bits b, int position);	// 检查position位置的b是不是1
+Bool isSubset(Bits b1, Bits b2);		// 检查b1是否是b2的子集（1001 是 1101的子集）
+void setBit(Bits b, int position);		// 把b的position位置设为1
+void setAllBits(Bits b);		// 把b全部设为1
+void unsetBit(Bits, int);		// 把b的position位置设为0
+void unsetAllBits(Bits);		// 把b全部设为0
+void andBits(Bits b1, Bits b2);		// b1 = b1 & b2
+void orBits(Bits, Bits);			// b1 = b1 | b2
+void shiftBits(Bits, int);		// b1 = b1 << n
+void getBits(Page p, Offset pos, Bits b);		// 从p取[pos, pos+b->nbytes]的tuple的signature，放入b中
+void putBits(Page p, Offset pos, Bits b);		// 从p取[pos, pos+b->nbytes]的tuple的signature，把b的信息复制到p中
+void showBits(Bits);			// 
+
+
+
+
+===========================================================
+
+【create.c】
+argv[1]：表的名字，不能重复
+argv[2]：设置为stype(char)，smic 或者 catc二选一
+argv[3]：设置为ntuples(int)，tuples的数量
+argv[4]：设置为nattrs(int)，每个tuple的attributes的数量
+argv[5]：设置为pF，错误匹配的概率 pF = 1 / argv[5]，pF必须 <= 0.01，即argv[5]必须>100
+
+创建一个空表
+会生成R.data, R.info, R.psig, R.tsig, R.bsig 五个文件
+
+【gendata.c】
+argv[1]：设置为ntups(int)，tuples的数量[1,10^6]
+argv[2]：设置为nattrs(int)，每个tuple的attributes的数量[2,9]
+argv[3]（可选）：若有，设置为startID(int)，范围为[0,9000000]；若没有startID = 1000000
+argv[4]（可选）：若有，值为随机数种；若没有，随机数种为0
+
+生成若干tuples，如
+id(7位数字)	randWord(20个随机字母)	属性1	属性2	......
+1234567		abdbabsdbbdasdb		a3-000	a4-000
+1234568		bdfeifdjijaeijfdjaod		a3-001	a4-001
+
+【insert.c】
+argv[1]：设置为rname，如果是-v，verbose=1，会打印查询过程的信息，此时表明为argv[2]；否则为表名
+
+打开rname，把所有tuple输入进relation
+

@@ -1,0 +1,50 @@
+# COMP9315 20T1 Sample Exam Q2
+
+Type your answer(s) to replace the xxx's
+
+
+assuming:
+
+X = select oid from pg_type where typname='int4'
+Y = select oid from pg_type where typname='text'
+
+(a) 
+
+create type Gender as enum ('male','female');
+
+
+pg_type(oid, typname, typtype, typisdefined, typrelid) 
+	(G, 'gender', 'e', true, 0)
+
+pg_enum(enumtypid, enumlabel)
+	(G, 'male')
+	(G, 'female')
+	(G, 'none of your business')
+
+
+(b) 
+
+create table People (
+    id   integer primary key,
+    name text not null,
+    sex  Gender -- may be null
+);
+
+pg_class(oid, relname, relkind, relnatts, relhaspkey, relhasindex)
+	(P, 'people', 'r', 3, true, true)
+	(PK, 'people_pkey', 'i', 1, false, false)
+
+
+pg_attribute(oid, attrelid, attname, atttypid, attlen, attnum, attnotnull)
+	（P,  'id',  X,  4, 1, true）
+	（P, 'name', Y, -1, 2, true）
+	（P, 'sex',  G,  4, 3, false）
+	（PK 'id',   X,  4, 1, false）
+
+
+pg_type(oid, typname, typtype, typisdefined, typrelid) 
+	(PT, 'people', -1, 'c')
+
+
+pg_index(indexrelid, indrelid, indnatts, indisunique, indisprimary)
+
